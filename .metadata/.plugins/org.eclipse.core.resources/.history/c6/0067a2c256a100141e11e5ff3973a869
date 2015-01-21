@@ -1,0 +1,23 @@
+package twg.tactic.base.engine;
+
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
+
+public class Input {
+	
+	private static ArrayList<Integer> currentKeys = new ArrayList<Integer>();
+	
+	public static void Update() {
+		
+	}
+	
+	public static boolean GetKey(int key) {
+		return Keyboard.isKeyDown(key);
+	}
+	
+	public static boolean GetKeyDown(int key) {
+		return false;
+	}
+	
+}

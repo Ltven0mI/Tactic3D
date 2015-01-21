@@ -1,0 +1,15 @@
+package twg.tactic.base.engine;
+
+public class Matrix4f {
+	
+	private float[][] m;
+	
+	public float[][] GetM() { return m; }
+	
+	public void SetM(float[][] m) { this.m = m; }
+	
+	public Matrix4f() {
+		m = new float[4][4];
+	}
+	
+}

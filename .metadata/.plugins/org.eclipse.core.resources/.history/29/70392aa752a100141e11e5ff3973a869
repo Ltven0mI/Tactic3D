@@ -1,0 +1,19 @@
+package twg.tactic.base.engine;
+
+public class Time {
+	
+	private static double m_delta;
+	
+	public static long GetTime() {
+		return System.nanoTime();
+	}
+	
+	public static double GetDelta() {
+		return delta;
+	}
+	
+	public static void SetDelta(double delta) {
+		m_delta = delta;
+	}
+	
+}

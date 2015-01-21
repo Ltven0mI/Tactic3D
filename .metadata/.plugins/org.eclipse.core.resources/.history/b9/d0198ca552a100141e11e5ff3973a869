@@ -1,0 +1,9 @@
+package twg.tactic.base.engine;
+
+public class Time {
+	
+	public static long GetTime() {
+		return System.nanoTime();
+	}
+	
+}

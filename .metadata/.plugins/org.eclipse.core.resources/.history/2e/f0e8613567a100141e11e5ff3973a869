@@ -1,0 +1,9 @@
+package twg.tactic.base.engine;
+
+public class RenderUtil {
+	
+	public static void ClearScreen() {
+		
+	}
+	
+}

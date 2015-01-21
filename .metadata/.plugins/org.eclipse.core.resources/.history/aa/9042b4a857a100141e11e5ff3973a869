@@ -1,0 +1,21 @@
+package twg.tactic.base.engine;
+
+public class Game {
+	
+	public Game() {
+		
+	}
+	
+	public void Input() {
+		
+	}
+	
+	public void Update() {
+		
+	}
+	
+	public void Render() {
+		
+	}
+	
+}

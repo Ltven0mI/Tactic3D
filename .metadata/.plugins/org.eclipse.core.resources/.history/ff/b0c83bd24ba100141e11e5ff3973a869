@@ -1,0 +1,9 @@
+package twg.tactic.base.engine;
+
+public class Window {
+	
+	public static void CreateWindow(int width, int height, String title) {
+		Display.setTitle(title);
+	}
+	
+}
