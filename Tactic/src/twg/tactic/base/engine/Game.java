@@ -15,19 +15,21 @@ public class Game {
 		material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(1, 1, 1));
 		shader = new PhongShader();
 		
-		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
-		
-		Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1,-1,0), new Vector2f(0, 0)),
-		new Vertex(new Vector3f(0,1,0), new Vector2f(0.5f, 0)),
-		new Vertex(new Vector3f(1,-1,0), new Vector2f(1.0f, 0)),
-		new Vertex(new Vector3f(0,-1,1), new Vector2f(0, 0.5f))};
-		int[] indices = new int[] {3,1,0,2,1,3,0,1,2,0,2,3};
+		Vertex[] vertices = new Vertex[] { new Vertex( new Vector3f(-1.0f, -1.0f, 0.5773f),	new Vector2f(0.0f, 0.0f)),
+							new Vertex( new Vector3f(0.0f, -1.0f, -1.15475f), new Vector2f(0.5f, 0.0f)),
+							new Vertex( new Vector3f(1.0f, -1.0f, 0.5773f),	new Vector2f(1.0f, 0.0f)),
+							new Vertex( new Vector3f(0.0f, 1.0f, 0.0f), new Vector2f(0.5f, 1.0f)) };
 
-		mesh.addVertices(vertices, indices);
+				int indices[] = {0, 3, 1, 1, 3, 2, 2, 3, 0, 1, 2, 0};
+
+		mesh.addVertices(vertices, indices, true);
 		
 		Transform.setProjection(70, Main.width, Main.height, 0.1f, 1000);
 		Transform.setCamera(camera);
 		transform = new Transform();
+		
+		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
+		PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
 		
 	}
 	
@@ -43,7 +45,9 @@ public class Game {
 		
 		transform.setTranslation(0, 0, 5);
 		transform.setRotation(0, sinTemp*180, 0);
-		//transform.SetScale(0.5f, 0.5f, 0.5f);
+		//transform.setScale(0.5f, sinTemp, 0.5f);
+		
+		//Transform.setProjection(Math.abs(sinTemp)*80 + 10, Main.width, Main.height, 0.1f, 1000);
 	}
 	
 	public void render() {

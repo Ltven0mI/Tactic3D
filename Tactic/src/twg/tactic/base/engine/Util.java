@@ -31,6 +31,9 @@ public class Util {
 			buffer.put(vertices[i].getPos().getZ());
 			buffer.put(vertices[i].getTexCoord().getX());
 			buffer.put(vertices[i].getTexCoord().getY());
+			buffer.put(vertices[i].getNormal().getX());
+			buffer.put(vertices[i].getNormal().getY());
+			buffer.put(vertices[i].getNormal().getZ());
 		}
 		buffer.flip();
 		return buffer;
@@ -64,7 +67,6 @@ public class Util {
 		int[] result = new int[data.length];
 		for(int i=0; i<result.length; i++){
 			result[i] = data[i].intValue();
-			System.out.println(1);
 		}
 		return result;
 	}
