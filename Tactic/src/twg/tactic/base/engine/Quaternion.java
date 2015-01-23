@@ -2,60 +2,60 @@ package twg.tactic.base.engine;
 
 public class Quaternion {
 	
-	private float m_x;
-	private float m_y;
-	private float m_z;
-	private float m_w;
+	private float x;
+	private float y;
+	private float z;
+	private float w;
 	
-	public float GetX() { return m_x; }
-	public float GetY() { return m_y; }
-	public float GetZ() { return m_z; }
-	public float GetW() { return m_w; }
+	public float GetX() { return x; }
+	public float GetY() { return y; }
+	public float GetZ() { return z; }
+	public float GetW() { return w; }
 	
-	public void SetX(float x) { m_x = x; }
-	public void SetY(float y) { m_y = y; }
-	public void SetZ(float y) { m_z = y; }
-	public void SetW(float w) { m_w = w; }
+	public void SetX(float x) { this.x = x; }
+	public void SetY(float y) { this.y = y; }
+	public void SetZ(float y) { this.z = y; }
+	public void SetW(float w) { this.w = w; }
 	
 	public Quaternion(float x, float y, float z, float w) {
-		m_x = x;
-		m_y = y;
-		m_z = z;
-		m_w = w;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.w = w;
 	}
 	
 	public float Length() {
-		return (float)Math.sqrt(m_x*m_x+m_y*m_y+m_z*m_z+m_w*m_w);
+		return (float)Math.sqrt(x*x+y*y+z*z+w*w);
 	}
 	
-	public Quaternion Normalise() {
+	public Quaternion Normalize() {
 		float length = Length();
-		m_x/=length;
-		m_y/=length;
-		m_z/=length;
-		m_w/=length;
+		x/=length;
+		y/=length;
+		z/=length;
+		w/=length;
 		return this;
 	}
 	
 	public Quaternion Conjugate() {
-		return new Quaternion(-m_x, -m_y, -m_z, m_w);
+		return new Quaternion(-x, -y, -z, w);
 	}
 	
 	public Quaternion Mul(Quaternion r) {
-		float w = m_w*r.GetW()-m_x*r.GetX()-m_y*r.GetY()-m_z*r.GetZ();
-		float x = m_x*r.GetW()+m_w*r.GetX()+m_y*r.GetZ()-m_z*r.GetY();
-		float y = m_y*r.GetW()+m_w*r.GetY()+m_z*r.GetX()-m_x*r.GetZ();
-		float z = m_z*r.GetW()+m_w*r.GetZ()+m_x*r.GetY()-m_y*r.GetX();
-		return new Quaternion(x, y, z, w);
+		float w_ = w*r.GetW()-x*r.GetX()-y*r.GetY()-z*r.GetZ();
+		float x_ = x*r.GetW()+w*r.GetX()+y*r.GetZ()-z*r.GetY();
+		float y_ = y*r.GetW()+w*r.GetY()+z*r.GetX()-x*r.GetZ();
+		float z_ = z*r.GetW()+w*r.GetZ()+x*r.GetY()-y*r.GetX();
+		return new Quaternion(x_, y_, z_, w_);
 	}
 	
 	public Quaternion Mul(Vector3f r) {
-		float w = -m_x*r.GetX()-m_y*r.GetY()-m_z*r.GetZ();
-		float x = m_w*r.GetX()+m_y*r.GetZ()-m_z*r.GetY();
-		float y = m_w*r.GetY()+m_z*r.GetX()-m_x*r.GetZ();
-		float z = m_w*r.GetZ()+m_x*r.GetY()-m_y*r.GetX();
+		float w_ = -x*r.GetX()-y*r.GetY()-z*r.GetZ();
+		float x_ = w*r.GetX()+y*r.GetZ()-z*r.GetY();
+		float y_ = w*r.GetY()+z*r.GetX()-x*r.GetZ();
+		float z_ = w*r.GetZ()+x*r.GetY()-y*r.GetX();
 		
-		return new Quaternion(x, y, z, w);
+		return new Quaternion(x_, y_, z_, w_);
 	}
 	
 }

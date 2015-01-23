@@ -4,8 +4,25 @@ import org.lwjgl.input.Keyboard;
 
 public class Game {
 	
+	private Mesh mesh;
+	private Shader shader;
+	private Transform transform;
+	private Camera camera;
+	
 	public Game() {
+		mesh = ResourceLoader.LoadMesh("box3.obj");
+		shader = new Shader();
+		camera = new Camera();
 		
+		Transform.SetProjection(70, Main.width, Main.height, 0.1f, 1000);
+		Transform.SetCamera(camera);
+		transform = new Transform();
+		
+		shader.AddVertexShader(ResourceLoader.LoadShader("basicVertex.vs"));
+		shader.AddFragmentShader(ResourceLoader.LoadShader("basicFragment.fs"));
+		shader.CompileShader();
+		
+		shader.AddUniform("transform");
 	}
 	
 	public void Input() {
@@ -24,12 +41,21 @@ public class Game {
 		}
 	}
 	
+	float temp = 0.0f;
+	
 	public void Update() {
+		temp += Time.GetDelta();
+		float sinTemp = (float)Math.sin(temp);
 		
+		transform.SetTranslation(0, 0, 5);
+		transform.SetRotation(0, sinTemp*180, 0);
+		//transform.SetScale(0.5f, 0.5f, 0.5f);
 	}
 	
 	public void Render() {
-		
+		shader.BindShader();
+		shader.SetUniform("transform", transform.GetProjectedTransformation());
+		mesh.Draw();
 	}
 	
 }

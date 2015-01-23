@@ -7,59 +7,59 @@ import org.lwjgl.input.Mouse;
 
 public class Input {
 	
-	public static final int m_numKeyCodes = 256;
-	public static final int m_numMouseButtons = 5;
+	public static final int numKeyCodes = 256;
+	public static final int numMouseButtons = 5;
 	
-	private static ArrayList<Integer> m_currentKeys = new ArrayList<Integer>();
-	private static ArrayList<Integer> m_downKeys = new ArrayList<Integer>();
-	private static ArrayList<Integer> m_upKeys = new ArrayList<Integer>();
+	private static ArrayList<Integer> currentKeys = new ArrayList<Integer>();
+	private static ArrayList<Integer> downKeys = new ArrayList<Integer>();
+	private static ArrayList<Integer> upKeys = new ArrayList<Integer>();
 	
-	private static ArrayList<Integer> m_currentMouse = new ArrayList<Integer>();
-	private static ArrayList<Integer> m_downMouse = new ArrayList<Integer>();
-	private static ArrayList<Integer> m_upMouse = new ArrayList<Integer>();
+	private static ArrayList<Integer> currentMouse = new ArrayList<Integer>();
+	private static ArrayList<Integer> downMouse = new ArrayList<Integer>();
+	private static ArrayList<Integer> upMouse = new ArrayList<Integer>();
 	
 	public static void Update() {
 		//Keyboard
-		m_upKeys.clear();
-		for(int i=0; i<m_numKeyCodes; i++){
-			if(!GetKey(i) && m_currentKeys.contains(i)){
-				m_upKeys.add(i);
+		upKeys.clear();
+		for(int i=0; i<numKeyCodes; i++){
+			if(!GetKey(i) && currentKeys.contains(i)){
+				upKeys.add(i);
 			}
 		}
 		
-		m_downKeys.clear();
-		for(int i=0; i<m_numKeyCodes; i++){
-			if(GetKey(i) && !m_currentKeys.contains(i)){
-				m_downKeys.add(i);
+		downKeys.clear();
+		for(int i=0; i<numKeyCodes; i++){
+			if(GetKey(i) && !currentKeys.contains(i)){
+				downKeys.add(i);
 			}
 		}
 		
-		m_currentKeys.clear();
-		for(int i=0; i<m_numKeyCodes; i++){
+		currentKeys.clear();
+		for(int i=0; i<numKeyCodes; i++){
 			if(GetKey(i)){
-				m_currentKeys.add(i);
+				currentKeys.add(i);
 			}
 		}
 		
 		//Mouse
-		m_upMouse.clear();
-		for(int i=0; i<m_numMouseButtons; i++){
-			if(!GetMouse(i) && m_currentMouse.contains(i)){
-				m_upMouse.add(i);
+		upMouse.clear();
+		for(int i=0; i<numMouseButtons; i++){
+			if(!GetMouse(i) && currentMouse.contains(i)){
+				upMouse.add(i);
 			}
 		}
 		
-		m_downMouse.clear();
-		for(int i=0; i<m_numMouseButtons; i++){
-			if(GetMouse(i) && !m_currentMouse.contains(i)){
-				m_downMouse.add(i);
+		downMouse.clear();
+		for(int i=0; i<numMouseButtons; i++){
+			if(GetMouse(i) && !currentMouse.contains(i)){
+				downMouse.add(i);
 			}
 		}
 		
-		m_currentMouse.clear();
-		for(int i=0; i<m_numMouseButtons; i++){
+		currentMouse.clear();
+		for(int i=0; i<numMouseButtons; i++){
 			if(GetMouse(i)){
-				m_currentMouse.add(i);
+				currentMouse.add(i);
 			}
 		}
 	}
@@ -69,11 +69,11 @@ public class Input {
 	}
 	
 	public static boolean GetKeyDown(int key) {
-		return m_downKeys.contains(key);
+		return downKeys.contains(key);
 	}
 	
 	public static boolean GetKeyUp(int key) {
-		return m_upKeys.contains(key);
+		return upKeys.contains(key);
 	}
 	
 	public static boolean GetMouse(int mb) {
@@ -81,11 +81,11 @@ public class Input {
 	}
 	
 	public static boolean GetMouseDown(int mb) {
-		return m_downMouse.contains(mb);
+		return downMouse.contains(mb);
 	}
 	
 	public static boolean GetMouseUp(int mb) {
-		return m_upMouse.contains(mb);
+		return upMouse.contains(mb);
 	}
 	
 	public static Vector2f GetMousePosition() {
