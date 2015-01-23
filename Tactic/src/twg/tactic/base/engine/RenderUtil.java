@@ -21,6 +21,10 @@ public class RenderUtil {
 		}
 	}
 	
+	public static void unbindTextures() {
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	
 	public static void initGraphics() {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		

@@ -3,16 +3,17 @@ package twg.tactic.base.engine;
 public class Game {
 	
 	private Mesh mesh;
-	private Shader shader;
+	//private Shader shader;
 	private Transform transform;
 	private Camera camera;
-	private Texture texture;
+	private Material material;
+	private UnlitShader ds;
 	
 	public Game() {
 		mesh = new Mesh();//ResourceLoader.loadMesh("tri.obj");
-		shader = new Shader();
 		camera = new Camera();
-		texture = ResourceLoader.loadTexture("test.png");
+		material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
+		ds = new UnlitShader();
 		
 		Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1,-1,0), new Vector2f(0, 0)),
 		new Vertex(new Vector3f(0,1,0), new Vector2f(0.5f, 0)),
@@ -25,12 +26,6 @@ public class Game {
 		Transform.setProjection(70, Main.width, Main.height, 0.1f, 1000);
 		Transform.setCamera(camera);
 		transform = new Transform();
-		
-		shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
-		shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
-		shader.compileShader();
-		
-		shader.addUniform("transform");
 	}
 	
 	public void input() {
@@ -44,15 +39,14 @@ public class Game {
 		float sinTemp = (float)Math.sin(temp);
 		
 		transform.setTranslation(0, 0, 5);
-		transform.setRotation(0, 180, 0);
+		transform.setRotation(0, sinTemp*180, 0);
 		//transform.SetScale(0.5f, 0.5f, 0.5f);
 	}
 	
 	public void render() {
 		RenderUtil.setClearColor(Transform.getCamera().getPos().div(2048f).abs());
-		shader.bindShader();
-		shader.setUniform("transform", transform.getProjectedTransformation());
-		texture.bind();
+		ds.bindShader();
+		ds.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
 		mesh.draw();
 	}
 	

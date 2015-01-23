@@ -83,6 +83,10 @@ public class Shader {
 		glAttachShader(program, shader);
 	}
 	
+	public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
+		
+	}
+	
 	public void setUniformi(String uniformName, int value) {
 		glUniform1i(uniforms.get(uniformName), value);
 	}
