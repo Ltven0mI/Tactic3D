@@ -7,13 +7,15 @@ public class Game {
 	private Transform transform;
 	private Camera camera;
 	private Material material;
-	private UnlitShader ds;
+	private PhongShader shader;
 	
 	public Game() {
 		mesh = new Mesh();//ResourceLoader.loadMesh("tri.obj");
 		camera = new Camera();
-		material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
-		ds = new UnlitShader();
+		material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(1, 1, 1));
+		shader = new PhongShader();
+		
+		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
 		
 		Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1,-1,0), new Vector2f(0, 0)),
 		new Vertex(new Vector3f(0,1,0), new Vector2f(0.5f, 0)),
@@ -26,6 +28,7 @@ public class Game {
 		Transform.setProjection(70, Main.width, Main.height, 0.1f, 1000);
 		Transform.setCamera(camera);
 		transform = new Transform();
+		
 	}
 	
 	public void input() {
@@ -45,8 +48,8 @@ public class Game {
 	
 	public void render() {
 		RenderUtil.setClearColor(Transform.getCamera().getPos().div(2048f).abs());
-		ds.bindShader();
-		ds.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
+		shader.bindShader();
+		shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
 		mesh.draw();
 	}
 	
