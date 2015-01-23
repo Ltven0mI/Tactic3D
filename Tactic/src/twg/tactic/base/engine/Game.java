@@ -20,7 +20,14 @@ public class Game {
 							new Vertex( new Vector3f(1.0f, -1.0f, 0.5773f),	new Vector2f(1.0f, 0.0f)),
 							new Vertex( new Vector3f(0.0f, 1.0f, 0.0f), new Vector2f(0.5f, 1.0f)) };
 
-				int indices[] = {0, 3, 1, 1, 3, 2, 2, 3, 0, 1, 2, 0};
+		int indices[] = {0, 3, 1, 1, 3, 2, 2, 3, 0, 1, 2, 0};
+				
+		/*Vertex[] vertices = new Vertex[] {new Vertex( new Vector3f(-10.0f, -1.0f, 10.0f),	new Vector2f(0.0f, 0.0f)),
+						  new Vertex( new Vector3f(10.0f, -1.0f, 10.0f),	new Vector2f(1.0f, 0.0f)),
+						  new Vertex( new Vector3f(-10.0f, -1.0f, -10.0f),	new Vector2f(0.0f, 1.0f)),
+						  new Vertex( new Vector3f(10.0f, -1.0f, -10.0f),	new Vector2f(1.0f, 1.0f))};
+
+		int indices[] = {0, 1, 2, 1, 3, 2};*/
 
 		mesh.addVertices(vertices, indices, true);
 		
