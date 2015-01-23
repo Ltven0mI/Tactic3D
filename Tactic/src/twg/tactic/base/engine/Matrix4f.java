@@ -4,15 +4,15 @@ public class Matrix4f {
 	
 	private float[][] m;
 	
-	public float[][] GetM() { return m; }
+	public float[][] getM() { return m; }
 	
-	public void SetM(float[][] m) { this.m = m; }
+	public void setM(float[][] m) { this.m = m; }
 	
 	public Matrix4f() {
 		m = new float[4][4];
 	}
 	
-	public Matrix4f InitIdentity() {
+	public Matrix4f initIdentity() {
 		m[0][0] = 1;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = 0;
 		m[1][0] = 0;	m[1][1] = 1;	m[1][2] = 0;	m[1][3] = 0;
 		m[2][0] = 0;	m[2][1] = 0;	m[2][2] = 1;	m[2][3] = 0;
@@ -20,7 +20,7 @@ public class Matrix4f {
 		return this;
 	}
 	
-	public Matrix4f InitTranslation(float x, float y, float z) {
+	public Matrix4f initTranslation(float x, float y, float z) {
 		m[0][0] = 1;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = x;
 		m[1][0] = 0;	m[1][1] = 1;	m[1][2] = 0;	m[1][3] = y;
 		m[2][0] = 0;	m[2][1] = 0;	m[2][2] = 1;	m[2][3] = z;
@@ -28,7 +28,7 @@ public class Matrix4f {
 		return this;
 	}
 	
-	public Matrix4f InitRotation(float x, float y, float z) {
+	public Matrix4f initRotation(float x, float y, float z) {
 		Matrix4f rx = new Matrix4f();
 		Matrix4f ry = new Matrix4f();
 		Matrix4f rz = new Matrix4f();
@@ -52,12 +52,12 @@ public class Matrix4f {
 		ry.m[2][0] = (float)Math.sin(y);ry.m[2][1] = 0;					ry.m[2][2] = (float)Math.cos(y);ry.m[2][3] = 0;
 		ry.m[3][0] = 0;					ry.m[3][1] = 0;					ry.m[3][2] = 0;					ry.m[3][3] = 1;
 		
-		m = rz.Mul(ry.Mul(rx)).GetM();
+		m = rz.mul(ry.mul(rx)).getM();
 		
 		return this;
 	}
 	
-	public Matrix4f InitScale(float x, float y, float z) {
+	public Matrix4f initScale(float x, float y, float z) {
 		m[0][0] = x;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = 0;
 		m[1][0] = 0;	m[1][1] = y;	m[1][2] = 0;	m[1][3] = 0;
 		m[2][0] = 0;	m[2][1] = 0;	m[2][2] = z;	m[2][3] = 0;
@@ -65,7 +65,7 @@ public class Matrix4f {
 		return this;
 	}
 	
-	public Matrix4f InitProjection(float fov, float width, float height, float zNear, float zFar) {
+	public Matrix4f initProjection(float fov, float width, float height, float zNear, float zFar) {
 		float ar = width/height;
 		float tanHalfFov = (float)Math.tan(Math.toRadians(fov/2));
 		float zRange = zNear-zFar;
@@ -77,41 +77,41 @@ public class Matrix4f {
 		return this;
 	}
 	
-	public Matrix4f InitCamera(Vector3f forward, Vector3f up) {
-		Vector3f f = forward.Normalize();
+	public Matrix4f initCamera(Vector3f forward, Vector3f up) {
+		Vector3f f = forward.normailze();
 		
-		Vector3f r = up.Normalize();
-		r = r.Cross(f);
+		Vector3f r = up.normailze();
+		r = r.cross(f);
 		
-		Vector3f u = f.Cross(r);
+		Vector3f u = f.cross(r);
 		
-		m[0][0] = r.GetX();	m[0][1] = r.GetY();	m[0][2] = r.GetZ();	m[0][3] = 0;
-		m[1][0] = u.GetX();	m[1][1] = u.GetY();	m[1][2] = u.GetZ();	m[1][3] = 0;
-		m[2][0] = f.GetX();	m[2][1] = f.GetY();	m[2][2] = f.GetZ();	m[2][3] = 0;
+		m[0][0] = r.getX();	m[0][1] = r.getY();	m[0][2] = r.getZ();	m[0][3] = 0;
+		m[1][0] = u.getX();	m[1][1] = u.getY();	m[1][2] = u.getZ();	m[1][3] = 0;
+		m[2][0] = f.getX();	m[2][1] = f.getY();	m[2][2] = f.getZ();	m[2][3] = 0;
 		m[3][0] = 0;		m[3][1] = 0;		m[3][2] = 0;		m[3][3] = 1;
 		
 		return this;
 	}
 	
-	public Matrix4f Mul(Matrix4f r) {
+	public Matrix4f mul(Matrix4f r) {
 		Matrix4f result = new Matrix4f();
 		
 		for(int i=0; i<4; i++){
 			for(int j=0; j<4; j++){
-				result.Set(i, j, m[i][0] * r.Get(0, j) +
-							m[i][1] * r.Get(1, j) +
-							m[i][2] * r.Get(2, j) +
-							m[i][3] * r.Get(3, j));
+				result.set(i, j, m[i][0] * r.get(0, j) +
+							m[i][1] * r.get(1, j) +
+							m[i][2] * r.get(2, j) +
+							m[i][3] * r.get(3, j));
 			}
 		}
 		return result;
 	}
 	
-	public float Get(int x, int y) {
+	public float get(int x, int y) {
 		return m[x][y];
 	}
 	
-	public void Set(int x, int y, float val) {
+	public void set(int x, int y, float val) {
 		m[x][y] = val;
 	}
 	

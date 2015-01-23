@@ -6,9 +6,9 @@ public class Vertex {
 	
 	private Vector3f pos;
 	
-	public Vector3f GetPos() { return pos; }
+	public Vector3f getPos() { return pos; }
 	
-	public void SetPos(Vector3f pos) { this.pos = pos; }
+	public void setPos(Vector3f pos) { this.pos = pos; }
 	
 	public Vertex(Vector3f pos) {
 		this.pos = pos;

@@ -9,7 +9,7 @@ public class ResourceLoader {
 	private static final String shaderFolder = "./res/shaders/";
 	private static final String meshFolder = "./res/models/";
 	
-	public static String LoadShader(String fileName) {
+	public static String loadShader(String fileName) {
 		StringBuilder shaderSource = new StringBuilder();
 		BufferedReader shaderReader = null;
 		
@@ -28,7 +28,7 @@ public class ResourceLoader {
 		return shaderSource.toString();
 	}
 	
-	public static Mesh LoadMesh(String filename) {
+	public static Mesh loadMesh(String filename) {
 		String[] splitArray = filename.split("\\.");
 		String extension = splitArray[splitArray.length-1];
 		
@@ -48,7 +48,7 @@ public class ResourceLoader {
 			String line;
 			while((line = meshReader.readLine()) != null){
 				String[] tokens = line.split(" ");
-				tokens = Util.RemoveEmptyStrings(tokens);
+				tokens = Util.removeEmptyStrings(tokens);
 				
 				if(tokens.length == 0 || tokens[0].equals("#")){
 					continue;
@@ -74,7 +74,7 @@ public class ResourceLoader {
 			vertices.toArray(vertexData);
 			indices.toArray(indexData);
 			
-			res.AddVertices(vertexData, Util.ToIntArray(indexData));
+			res.addVertices(vertexData, Util.toIntArray(indexData));
 			return res;
 		}catch(Exception e){
 			e.printStackTrace();

@@ -16,17 +16,17 @@ public class Mesh {
 		size = 0;
 	}
 	
-	public void AddVertices(Vertex[] vertices, int[] indices) {
+	public void addVertices(Vertex[] vertices, int[] indices) {
 		size = indices.length;
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, Util.CreateFlippedBuffer(vertices), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, Util.createFlippedBuffer(vertices), GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, Util.CreateFlippedBuffer(indices), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, Util.createFlippedBuffer(indices), GL_STATIC_DRAW);
 	}
 	
-	public void Draw() {
+	public void draw() {
 		glEnableVertexAttribArray(0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);

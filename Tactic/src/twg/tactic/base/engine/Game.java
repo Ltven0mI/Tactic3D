@@ -1,7 +1,5 @@
 package twg.tactic.base.engine;
 
-import org.lwjgl.input.Keyboard;
-
 public class Game {
 	
 	private Mesh mesh;
@@ -10,52 +8,40 @@ public class Game {
 	private Camera camera;
 	
 	public Game() {
-		mesh = ResourceLoader.LoadMesh("box3.obj");
+		mesh = ResourceLoader.loadMesh("monkey.obj");
 		shader = new Shader();
 		camera = new Camera();
 		
-		Transform.SetProjection(70, Main.width, Main.height, 0.1f, 1000);
-		Transform.SetCamera(camera);
+		Transform.setProjection(70, Main.width, Main.height, 0.1f, 1000);
+		Transform.setCamera(camera);
 		transform = new Transform();
 		
-		shader.AddVertexShader(ResourceLoader.LoadShader("basicVertex.vs"));
-		shader.AddFragmentShader(ResourceLoader.LoadShader("basicFragment.fs"));
-		shader.CompileShader();
+		shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
+		shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
+		shader.compileShader();
 		
-		shader.AddUniform("transform");
+		shader.addUniform("transform");
 	}
 	
-	public void Input() {
-		if(Input.GetKeyDown(Keyboard.KEY_UP)){
-			System.out.println("Pressed Up");
-		}
-		if(Input.GetKeyUp(Keyboard.KEY_UP)){
-			System.out.println("Released Up");
-		}
-		
-		if(Input.GetMouseDown(1)){
-			System.out.println("Pressed RMB At: "+Input.GetMousePosition().ToString());
-		}
-		if(Input.GetMouseUp(1)){
-			System.out.println("Released RMB: "+Input.GetMousePosition().ToString());
-		}
+	public void input() {
+		camera.input();
 	}
 	
 	float temp = 0.0f;
 	
-	public void Update() {
-		temp += Time.GetDelta();
+	public void update() {
+		temp += Time.getDelta();
 		float sinTemp = (float)Math.sin(temp);
 		
-		transform.SetTranslation(0, 0, 5);
-		transform.SetRotation(0, sinTemp*180, 0);
+		transform.setTranslation(0, 0, 5);
+		transform.setRotation(sinTemp*180, sinTemp*180, 0);
 		//transform.SetScale(0.5f, 0.5f, 0.5f);
 	}
 	
-	public void Render() {
-		shader.BindShader();
-		shader.SetUniform("transform", transform.GetProjectedTransformation());
-		mesh.Draw();
+	public void render() {
+		shader.bindShader();
+		shader.setUniform("transform", transform.getProjectedTransformation());
+		mesh.draw();
 	}
 	
 }

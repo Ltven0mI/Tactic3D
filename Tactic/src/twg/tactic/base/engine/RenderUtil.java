@@ -5,11 +5,11 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class RenderUtil {
 	
-	public static void ClearScreen() {
+	public static void clearScreen() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	
-	public static void InitGraphics() {
+	public static void initGraphics() {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		
 		glFrontFace(GL_CW);
@@ -20,7 +20,7 @@ public class RenderUtil {
 		glEnable(GL_FRAMEBUFFER_SRGB);
 	}
 	
-	public static String GetOpenGLVersion() {
+	public static String getOpenGLVersion() {
 		return glGetString(GL_VERSION);
 	}
 	

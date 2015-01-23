@@ -11,23 +11,23 @@ public class Main {
 	private Game game;
 	
 	public Main() {
-		System.out.println(RenderUtil.GetOpenGLVersion());
-		RenderUtil.InitGraphics();
+		System.out.println(RenderUtil.getOpenGLVersion());
+		RenderUtil.initGraphics();
 		isRunning = false;
 		game = new Game();
 	}
 	
-	public void Start() {
+	public void start() {
 		if(isRunning) return;
-		Run();
+		run();
 	}
 	
-	public void Stop() {
+	public void stop() {
 		if(!isRunning) return;
 		isRunning = false;
 	}
 	
-	private void Run() {
+	private void run() {
 		isRunning = true;
 		
 		int frames = 0;
@@ -35,13 +35,13 @@ public class Main {
 		
 		final double frameTime = 1.0/frameCap;
 		
-		long lastTime = Time.GetTime();
+		long lastTime = Time.getTime();
 		double unprocessedTime = 0;
 		
 		while(isRunning){
 			boolean render = false;
 			
-			long currentTime = Time.GetTime();
+			long currentTime = Time.getTime();
 			long passedTime = currentTime-lastTime;
 			lastTime = currentTime;
 			
@@ -52,15 +52,15 @@ public class Main {
 				unprocessedTime -= frameTime;
 				render = true;
 
-				if(Window.IsCloseRequested()) Stop();
+				if(Window.isCloseRequested()) stop();
 				
 				//Update Engine
-				Time.SetDelta(frameTime);
+				Time.setDelta(frameTime);
 				
-				Input.Update();
+				Input.update();
 				
-				game.Input();
-				game.Update();
+				game.input();
+				game.update();
 				
 				if(frameCounter >= Time.second){
 					System.out.println(frames);
@@ -69,30 +69,30 @@ public class Main {
 				}
 			}
 			if(render){
-				Render();
+				render();
 				frames++;
 			}else{
 				try { Thread.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
 			}
 		}
-		Cleanup();
+		cleanup();
 	}
 	
-	private void Render() {
-		RenderUtil.ClearScreen();
-		game.Render();
-		Window.Render();
+	private void render() {
+		RenderUtil.clearScreen();
+		game.render();
+		Window.render();
 	}
 	
-	private void Cleanup() {
-		Window.Dispose();
+	private void cleanup() {
+		Window.dispose();
 	}
 	
 	public static void main(String[] args) {
-		Window.CreateWindow(width, height, title);
+		Window.createWindow(width, height, title);
 		
 		Main game = new Main();
-		game.Start();
+		game.start();
 	}
 	
 }

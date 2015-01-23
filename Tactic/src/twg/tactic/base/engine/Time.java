@@ -5,15 +5,15 @@ public class Time {
 	
 	private static double delta;
 	
-	public static long GetTime() {
+	public static long getTime() {
 		return System.nanoTime();
 	}
 	
-	public static double GetDelta() {
+	public static double getDelta() {
 		return delta;
 	}
 	
-	public static void SetDelta(double delta) {
+	public static void setDelta(double delta) {
 		Time.delta = delta;
 	}
 	

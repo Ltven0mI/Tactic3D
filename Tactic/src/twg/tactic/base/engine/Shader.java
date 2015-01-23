@@ -20,11 +20,11 @@ public class Shader {
 		}
 	}
 	
-	public void BindShader() {
+	public void bindShader() {
 		glUseProgram(program);
 	}
 	
-	public void AddUniform(String uniform) {
+	public void addUniform(String uniform) {
 		int uniformLocation = glGetUniformLocation(program, uniform);
 		System.out.println(uniformLocation);
 		if(uniformLocation == 0xFFFFFF){
@@ -36,20 +36,20 @@ public class Shader {
 		uniforms.put(uniform, uniformLocation);
 	}
 	
-	public void AddVertexShader(String text) {
-		AddProgram(text, GL_VERTEX_SHADER);
+	public void addVertexShader(String text) {
+		addProgram(text, GL_VERTEX_SHADER);
 	}
 	
-	public void AddGeometryShader(String text) {
-		AddProgram(text, GL_GEOMETRY_SHADER);
+	public void addGeometryShader(String text) {
+		addProgram(text, GL_GEOMETRY_SHADER);
 	}
 
-	public void AddFragmentShader(String text) {
-		AddProgram(text, GL_FRAGMENT_SHADER);
+	public void addFragmentShader(String text) {
+		addProgram(text, GL_FRAGMENT_SHADER);
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void CompileShader() {
+	public void compileShader() {
 		glLinkProgram(program);
 		
 		if(glGetProgram(program, GL_LINK_STATUS) == 0){
@@ -66,7 +66,7 @@ public class Shader {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private void AddProgram(String text, int type) {
+	private void addProgram(String text, int type) {
 		int shader = glCreateShader(type);
 		
 		if(shader == 0){
@@ -83,20 +83,20 @@ public class Shader {
 		glAttachShader(program, shader);
 	}
 	
-	public void SetUniformi(String uniformName, int value) {
+	public void setUniformi(String uniformName, int value) {
 		glUniform1i(uniforms.get(uniformName), value);
 	}
 	
-	public void SetUniformf(String uniformName, float value) {
+	public void setUniformf(String uniformName, float value) {
 		glUniform1f(uniforms.get(uniformName), value);
 	}
 	
-	public void SetUniform(String uniformName, Vector3f value) {
-		glUniform3f(uniforms.get(uniformName), value.GetX(), value.GetY(), value.GetZ());
+	public void setUniform(String uniformName, Vector3f value) {
+		glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
 	}
 	
-	public void SetUniform(String uniformName, Matrix4f value) {
-		glUniformMatrix4(uniforms.get(uniformName), true, Util.CreateFlippedBuffer(value));
+	public void setUniform(String uniformName, Matrix4f value) {
+		glUniformMatrix4(uniforms.get(uniformName), true, Util.createFlippedBuffer(value));
 	}
 	
 }
