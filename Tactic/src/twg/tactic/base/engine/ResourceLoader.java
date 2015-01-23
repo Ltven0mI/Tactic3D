@@ -1,13 +1,31 @@
 package twg.tactic.base.engine;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import org.newdawn.slick.opengl.TextureLoader;
 
 public class ResourceLoader {
 	
 	private static final String shaderFolder = "./res/shaders/";
 	private static final String meshFolder = "./res/models/";
+	private static final String textureFolder = "./res/textures/";
+	
+	public static Texture loadTexture(String filename) {
+		String[] splitArray = filename.split("\\.");
+		String extension = splitArray[splitArray.length-1];
+		
+		try{
+			return new Texture(TextureLoader.getTexture(extension, new FileInputStream(new File(textureFolder + filename))).getTextureID());
+		}catch(Exception e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+		return null;
+	}
 	
 	public static String loadShader(String fileName) {
 		StringBuilder shaderSource = new StringBuilder();

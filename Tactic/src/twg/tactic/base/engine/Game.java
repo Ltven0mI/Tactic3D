@@ -6,11 +6,21 @@ public class Game {
 	private Shader shader;
 	private Transform transform;
 	private Camera camera;
+	private Texture texture;
 	
 	public Game() {
-		mesh = ResourceLoader.loadMesh("monkey.obj");
+		mesh = new Mesh();//ResourceLoader.loadMesh("tri.obj");
 		shader = new Shader();
 		camera = new Camera();
+		texture = ResourceLoader.loadTexture("test.png");
+		
+		Vertex[] vertices = new Vertex[] {new Vertex(new Vector3f(-1,-1,0), new Vector2f(0, 0)),
+		new Vertex(new Vector3f(0,1,0), new Vector2f(0.5f, 0)),
+		new Vertex(new Vector3f(1,-1,0), new Vector2f(1.0f, 0)),
+		new Vertex(new Vector3f(0,-1,1), new Vector2f(0, 0.5f))};
+		int[] indices = new int[] {3,1,0,2,1,3,0,1,2,0,2,3};
+
+		mesh.addVertices(vertices, indices);
 		
 		Transform.setProjection(70, Main.width, Main.height, 0.1f, 1000);
 		Transform.setCamera(camera);
@@ -34,13 +44,15 @@ public class Game {
 		float sinTemp = (float)Math.sin(temp);
 		
 		transform.setTranslation(0, 0, 5);
-		transform.setRotation(sinTemp*180, sinTemp*180, 0);
+		transform.setRotation(0, 180, 0);
 		//transform.SetScale(0.5f, 0.5f, 0.5f);
 	}
 	
 	public void render() {
+		RenderUtil.setClearColor(Transform.getCamera().getPos().div(2048f).abs());
 		shader.bindShader();
 		shader.setUniform("transform", transform.getProjectedTransformation());
+		texture.bind();
 		mesh.draw();
 	}
 	
