@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
 public class Mesh {
-	
 	private int vbo;
 	private int ibo;
 	private int size;
@@ -21,7 +20,8 @@ public class Mesh {
 	}
 	
 	public void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals) {
-		if(calcNormals){
+		if(calcNormals)
+		{
 			calcNormals(vertices, indices);
 		}
 		
@@ -40,9 +40,9 @@ public class Mesh {
 		glEnableVertexAttribArray(2);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.size*4, 0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.size*4, 12);
-		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.size*4, 20);
+		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.size * 4, 0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.size * 4, 12);
+		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.size * 4, 20);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
@@ -53,24 +53,22 @@ public class Mesh {
 	}
 	
 	private void calcNormals(Vertex[] vertices, int[] indices) {
-		for(int i=0; i<indices.length;i+=3){
+		for(int i = 0; i < indices.length; i += 3){
 			int i0 = indices[i];
-			int i1 = indices[i+1];
-			int i2 = indices[i+2];
+			int i1 = indices[i + 1];
+			int i2 = indices[i + 2];
 			
-			Vector3f v1 = vertices[i0].getPos().sub(vertices[i1].getPos());
+			Vector3f v1 = vertices[i1].getPos().sub(vertices[i0].getPos());
 			Vector3f v2 = vertices[i2].getPos().sub(vertices[i0].getPos());
 			
-			Vector3f norm = v1.cross(v2).normalized();
+			Vector3f normal = v1.cross(v2).normalized();
 			
-			vertices[i0].setNormal(vertices[i0].getNormal().add(norm));
-			vertices[i1].setNormal(vertices[i1].getNormal().add(norm));
-			vertices[i2].setNormal(vertices[i2].getNormal().add(norm));
+			vertices[i0].setNormal(vertices[i0].getNormal().add(normal));
+			vertices[i1].setNormal(vertices[i1].getNormal().add(normal));
+			vertices[i2].setNormal(vertices[i2].getNormal().add(normal));
 		}
 		
-		for(int j=0; j<vertices.length; j++){
-			vertices[j].setNormal(vertices[j].getNormal().normalized());
-		}
+		for(int i = 0; i < vertices.length; i++)
+			vertices[i].setNormal(vertices[i].getNormal().normalized());
 	}
-	
 }
