@@ -9,13 +9,13 @@ public class Game {
 	private Material material;
 	private PhongShader shader;
 	
-	PointLight p1 = new PointLight(new BaseLight(new Vector3f(1, 0.5f, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(-2, 0, 3f));
-	PointLight p2 = new PointLight(new BaseLight(new Vector3f(0, 0.5f, 1), 0.8f), new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f));
+	PointLight p1 = new PointLight(new BaseLight(new Vector3f(1, 0.5f, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(-2, 0, 3f), 10);
+	PointLight p2 = new PointLight(new BaseLight(new Vector3f(0, 0.5f, 1), 0.8f), new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f), 10);
+	SpotLight s1 = new SpotLight(new PointLight(new BaseLight(new Vector3f(0, 1f, 1f), 0.8f), new Attenuation(0, 0, 0.1f), new Vector3f(-2, 0, 3f), 30), new Vector3f(1, 1, 1), 0.7f);
 	
 	public Game() {
-		mesh = new Mesh();//ResourceLoader.loadMesh("tri.obj");
 		camera = new Camera();
-		material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(1, 1, 1), 1, 8);
+		material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
 		shader = PhongShader.getInstance();
 		
 		/*Vertex[] vertices = new Vertex[] { new Vertex( new Vector3f(-1.0f, -1.0f, 0.5773f),	new Vector2f(0.0f, 0.0f)),
@@ -35,16 +35,17 @@ public class Game {
 		
 		int indices[] = { 0, 1, 2, 2, 1, 3};
 
-		mesh.addVertices(vertices, indices, true);
+		mesh = new Mesh(vertices, indices, true);
 		
 		Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
 		Transform.setCamera(camera);
 		transform = new Transform();
 		
 		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
-		//PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
+		PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.1f), new Vector3f(1, 1, 1)));
 		
 		PhongShader.setPointLight(new PointLight[]{p1, p2});
+		PhongShader.setSpotLight(new SpotLight[] {s1});
 	}
 	
 	public void input() {
@@ -57,7 +58,7 @@ public class Game {
 		temp += Time.getDelta();
 		float sinTemp = (float)Math.sin(temp);
 		
-		transform.setTranslation(0, -0.5f, 5);
+		transform.setTranslation(0, -1, 5);
 		//transform.setRotation(0, sinTemp*180, 0);
 		//transform.setScale(0.5f, sinTemp, 0.5f);
 		
@@ -65,6 +66,9 @@ public class Game {
 		
 		p1.setPos(new Vector3f(3,0,8.0f * (float)(Math.sin(temp) + 1.0/2.0) + 10));
 		p2.setPos(new Vector3f(7,0,8.0f * (float)(Math.cos(temp) + 1.0/2.0) + 10));
+		
+		s1.getPointLight().setPos(camera.getPos());
+		s1.setDirection(camera.getForward());
 	}
 	
 	public void render() {

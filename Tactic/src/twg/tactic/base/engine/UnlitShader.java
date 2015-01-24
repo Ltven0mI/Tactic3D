@@ -2,11 +2,15 @@ package twg.tactic.base.engine;
 
 public class UnlitShader extends Shader{
 	
-	public UnlitShader() {
+	private static final UnlitShader instance = new UnlitShader();
+	
+	public static UnlitShader getInstance() { return instance; }
+	
+	private UnlitShader() {
 		super();
 		
-		addVertexShader(ResourceLoader.loadShader("unlitVert.vs"));
-		addFragmentShader(ResourceLoader.loadShader("unlitFrag.fs"));
+		addVertexShader("unlitVert.vs");
+		addFragmentShader("unlitFrag.fs");
 		compileShader();
 		
 		addUniform("transform");

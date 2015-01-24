@@ -3,10 +3,13 @@ package twg.tactic.base.engine;
 public class PhongShader extends Shader
 {
 	private static final int MAX_POINT_LIGHTS = 4;
+	private static final int MAX_SPOT_LIGHTS = 4;
 	
 	private static Vector3f ambientLight = new Vector3f(0.1f,0.1f,0.1f);
 	private static DirectionalLight directionalLight = new DirectionalLight(new BaseLight(new Vector3f(0,0,0), 0), new Vector3f(0,0,0));
 	private static PointLight[] pointLights = new PointLight[] {};
+	private static SpotLight[] spotLights = new SpotLight[] {};
+	
 	private static final PhongShader instance = new PhongShader();
 	
 	public static Vector3f getAmbientLight() { return ambientLight; }
@@ -25,12 +28,23 @@ public class PhongShader extends Shader
 		
 		PhongShader.pointLights = pointLights;
 	}
+	public static void setSpotLight(SpotLight[] spotLights)
+	{
+		if(spotLights.length > MAX_SPOT_LIGHTS)
+		{
+			System.err.println("Error: You passed in too many spot lights. Max allowed is " + MAX_SPOT_LIGHTS + ", you passed in " + spotLights.length);
+			new Exception().printStackTrace();
+			System.exit(1);
+		}
+		
+		PhongShader.spotLights = spotLights;
+	}
 	
 	private PhongShader() {
 		super();
 		
-		addVertexShader(ResourceLoader.loadShader("phongVert.vs"));
-		addFragmentShader(ResourceLoader.loadShader("phongFrag.fs"));
+		addVertexShader("phongVert.vs");
+		addFragmentShader("phongFrag.fs");
 		compileShader();
 		
 		addUniform("transform");
@@ -38,8 +52,8 @@ public class PhongShader extends Shader
 		addUniform("baseColor");
 		addUniform("ambientLight");
 		
-		addUniform("specularIntensity");
-		addUniform("specularPower");
+		addUniform("specInt");
+		addUniform("specExp");
 		addUniform("eyePos");
 		
 		addUniform("directionalLight.base.color");
@@ -54,6 +68,20 @@ public class PhongShader extends Shader
 			addUniform("pointLights[" + i + "].atten.linear");
 			addUniform("pointLights[" + i + "].atten.exponent");
 			addUniform("pointLights[" + i + "].position");
+			addUniform("pointLights[" + i + "].range");
+		}
+		
+		for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
+		{
+			addUniform("spotLights[" + i + "].pointLight.base.color");
+			addUniform("spotLights[" + i + "].pointLight.base.intensity");
+			addUniform("spotLights[" + i + "].pointLight.atten.constant");
+			addUniform("spotLights[" + i + "].pointLight.atten.linear");
+			addUniform("spotLights[" + i + "].pointLight.atten.exponent");
+			addUniform("spotLights[" + i + "].pointLight.position");
+			addUniform("spotLights[" + i + "].pointLight.range");
+			addUniform("spotLights[" + i + "].direction");
+			addUniform("spotLights[" + i + "].cutOff");
 		}
 		
 		addUniform("hasTexture");
@@ -75,8 +103,11 @@ public class PhongShader extends Shader
 		for(int i = 0; i < pointLights.length; i++)
 			setUniform("pointLights[" + i + "]", pointLights[i]);
 		
-		setUniformf("specularIntensity", material.getSpecularInt());
-		setUniformf("specularPower", material.getSpecularExp());
+		for(int i = 0; i < spotLights.length; i++)
+			setUniform("spotLights[" + i + "]", spotLights[i]);
+		
+		setUniformf("specInt", material.getSpecularInt());
+		setUniformf("specExp", material.getSpecularExp());
 		
 		setUniform("eyePos", Transform.getCamera().getPos());
 		
@@ -99,5 +130,12 @@ public class PhongShader extends Shader
 		setUniformf(uniformName + ".atten.linear", pointLight.getAtten().getLinear());
 		setUniformf(uniformName + ".atten.exponent", pointLight.getAtten().getExponent());
 		setUniform(uniformName + ".position", pointLight.getPos());
+		setUniformf(uniformName + ".range", pointLight.getRange());
+	}
+	
+	public void setUniform(String uniformName, SpotLight spotLight) {
+		setUniform(uniformName + ".pointLight", spotLight.getPointLight());
+		setUniform(uniformName + ".direction", spotLight.getDirection());
+		setUniformf(uniformName + ".cutOff", spotLight.getCutOff());
 	}
 }
