@@ -10,7 +10,7 @@ uniform sampler2D sampler;
 
 void main(){
 	
-	vec4 color = vec4(baseColor, 1
+	vec4 color = vec4(baseColor, 1);
 	
 	if(hasTexture == 1)
 		color *= texture2D(sampler, texCoord0.xy);
