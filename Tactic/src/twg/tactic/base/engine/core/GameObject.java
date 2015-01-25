@@ -3,6 +3,7 @@ package twg.tactic.base.engine.core;
 import java.util.ArrayList;
 
 import twg.tactic.base.engine.components.GameComponent;
+import twg.tactic.base.engine.rendering.RenderingEngine;
 import twg.tactic.base.engine.rendering.Shader;
 
 public class GameObject {
@@ -55,6 +56,16 @@ public class GameObject {
 		
 		for(GameObject child : children){
 			child.render(shader);
+		}
+	}
+	
+	public void addToRenderingEngine(RenderingEngine renderingEngine) {
+		for(GameComponent component : components){
+			component.addToRenderingEngine(renderingEngine);
+		}
+		
+		for(GameObject child : children){
+			child.addToRenderingEngine(renderingEngine);
 		}
 	}
 	

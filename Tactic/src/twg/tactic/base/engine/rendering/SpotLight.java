@@ -1,5 +1,6 @@
 package twg.tactic.base.engine.rendering;
 
+import twg.tactic.base.engine.components.PointLight;
 import twg.tactic.base.engine.core.Vector3f;
 
 public class SpotLight {

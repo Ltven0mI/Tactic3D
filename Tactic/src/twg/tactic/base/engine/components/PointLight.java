@@ -1,8 +1,11 @@
-package twg.tactic.base.engine.rendering;
+package twg.tactic.base.engine.components;
 
 import twg.tactic.base.engine.core.Vector3f;
+import twg.tactic.base.engine.rendering.Attenuation;
+import twg.tactic.base.engine.rendering.BaseLight;
+import twg.tactic.base.engine.rendering.RenderingEngine;
 
-public class PointLight {
+public class PointLight extends GameComponent{
 	
 	private BaseLight base;
 	private Attenuation atten;
@@ -24,6 +27,11 @@ public class PointLight {
 		this.atten = atten;
 		this.pos = pos;
 		this.range = range;
+	}
+	
+	@Override
+	public void addToRenderingEngine(RenderingEngine renderingEngine) {
+		renderingEngine.addPointLight(this);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package twg.tactic.base.engine.rendering;
 
+import twg.tactic.base.engine.components.DirectionalLight;
 import twg.tactic.base.engine.core.Matrix4f;
 import twg.tactic.base.engine.core.Transform;
 
