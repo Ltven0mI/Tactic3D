@@ -1,5 +1,6 @@
 package twg.tactic.base.engine.game;
 
+import twg.tactic.base.engine.components.MeshRenderer;
 import twg.tactic.base.engine.core.Game;
 import twg.tactic.base.engine.core.GameObject;
 import twg.tactic.base.engine.core.Vector2f;

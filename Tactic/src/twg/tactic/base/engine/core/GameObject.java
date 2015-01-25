@@ -2,6 +2,7 @@ package twg.tactic.base.engine.core;
 
 import java.util.ArrayList;
 
+import twg.tactic.base.engine.components.GameComponent;
 import twg.tactic.base.engine.rendering.Shader;
 
 public class GameObject {

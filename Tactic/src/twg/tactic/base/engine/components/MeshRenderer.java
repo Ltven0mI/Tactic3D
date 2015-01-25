@@ -1,12 +1,11 @@
-package twg.tactic.base.engine.game;
+package twg.tactic.base.engine.components;
 
-import twg.tactic.base.engine.core.GameComponent;
 import twg.tactic.base.engine.core.Transform;
 import twg.tactic.base.engine.rendering.Material;
 import twg.tactic.base.engine.rendering.Mesh;
 import twg.tactic.base.engine.rendering.Shader;
 
-public class MeshRenderer implements GameComponent{
+public class MeshRenderer extends GameComponent{
 	
 	private Mesh mesh;
 	private Material material;
@@ -15,12 +14,6 @@ public class MeshRenderer implements GameComponent{
 		this.mesh = mesh;
 		this.material = material;
 	}
-
-	@Override
-	public void input(Transform transform, float delta) {}
-
-	@Override
-	public void update(Transform transform, float delta) {}
 	
 	@Override
 	public void render(Transform transform, Shader shader) {
