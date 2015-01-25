@@ -53,6 +53,10 @@ public class Vector3f {
 		return this;
 	}
 	
+	public Vector3f lerp(Vector3f dest, float lerpFactor) {
+		return dest.sub(this).mul(lerpFactor).add(this);
+	}
+	
 	public Vector3f cross(Vector3f r) {
 		float x_ = y * r.getZ() - z * r.getY();
 		float y_ = z * r.getX() - x * r.getZ();
@@ -98,6 +102,18 @@ public class Vector3f {
 	
 	public String toString() {
 		return "("+x+", "+y+", "+z+")";
+	}
+	
+	public Vector2f getXY() { return new Vector2f(x, y); }
+	public Vector2f getYZ() { return new Vector2f(y, z); }
+	public Vector2f getZX() { return new Vector2f(z, x); }
+	
+	public Vector2f getYX() { return new Vector2f(y, x); }
+	public Vector2f getZY() { return new Vector2f(z, y); }
+	public Vector2f getXZ() { return new Vector2f(x, z); }
+	
+	public boolean equels(Vector3f r) {
+		return x == r.getX() && y == r.getY() && z == r.getZ();
 	}
 	
 }

@@ -6,6 +6,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import twg.tactic.base.engine.core.Vector2f;
+
 public class Window {
 	
 	public static void createWindow(int width, int height, String title) {
@@ -42,6 +44,10 @@ public class Window {
 	
 	public static String getTitle() {
 		return Display.getTitle();
+	}
+	
+	public static Vector2f getCenter() {
+		return new Vector2f((float)getWidth()/2, (float)getHeight()/2);
 	}
 	
 }

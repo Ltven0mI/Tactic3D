@@ -11,11 +11,7 @@ import twg.tactic.base.engine.rendering.Vertex;
 
 public class TestGame extends Game{
 	
-	//private Camera camera;
-	
 	public void init() {
-		//camera = new Camera();
-				
 		float fieldDepth = 10.0f;
 		float fieldWidth = 10.0f;
 		
@@ -29,30 +25,11 @@ public class TestGame extends Game{
 		Mesh mesh = new Mesh(vertices, indices, true);
 		Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
 		MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
-		//getRootObject().addComponent(meshRenderer);
 		
 		GameObject planeObject = new GameObject();
 		planeObject.addComponent(meshRenderer);
-		planeObject.getTransform().setTranslation(0, -1, 5);
+		planeObject.getTransform().setPos(0, -1, 5);
 		
 		getRootObject().addChild(planeObject);
-		
-		//Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-		//Transform.setCamera(camera);
 	}
-	
-//	public void input() {
-//		camera.input();
-//		root.input();
-//	}
-//	
-//	public void update() {
-//		root.getTransform().setTranslation(0, -1, 5);
-//		root.update();
-//	}
-//	
-//	public void render() {
-//		root.render();
-//	}
-	
 }

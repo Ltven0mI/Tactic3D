@@ -1,7 +1,5 @@
 package twg.tactic.base.engine.core;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -173,11 +171,11 @@ public class Input {
 		return !getMouse(mouseButton) && lastMouse[mouseButton];
 	}
 	
-	public static Vector2f getMousePosition() {
+	public static Vector2f getMousePos() {
 		return new Vector2f(Mouse.getX(), Mouse.getY());
 	}
 	
-	public static void setMousePosition(Vector2f pos) {
+	public static void setMousePos(Vector2f pos) {
 		Mouse.setCursorPosition((int)pos.getX(), (int)pos.getY());
 	}
 	

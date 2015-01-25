@@ -1,20 +1,12 @@
 package twg.tactic.base.engine.core;
 
 public class Time {
-	public static final long second = (long)1000000000;
+	private static final long second = 1000000000;
 	
 	private static double delta;
 	
-	public static long getTime() {
-		return System.nanoTime();
-	}
-	
-	public static double getDelta() {
-		return delta;
-	}
-	
-	public static void setDelta(double delta) {
-		Time.delta = delta;
+	public static double getTime() {
+		return (double)(System.nanoTime()/(double)second);
 	}
 	
 }

@@ -43,9 +43,9 @@ public class Camera {
 	boolean mouseLocked = false;
 	Vector2f centerPos = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
 	
-	public void input() {
+	public void input(float delta) {
 		float sensitivity = 0.5f;
-		float moveAmt = (float)(10*Time.getDelta());
+		float moveAmt = (float)(10*delta);
 		//float rotAmt = (float)(100*Time.getDelta());
 		
 		if(Input.getKey(Input.KEY_ESCAPE)){
@@ -53,7 +53,7 @@ public class Camera {
 			mouseLocked = false;
 		}
 		if(Input.getMouseDown(0)){
-			Input.setMousePosition(centerPos);
+			Input.setMousePos(centerPos);
 			Input.setCursor(false);
 			mouseLocked = true;
 		}
@@ -72,7 +72,7 @@ public class Camera {
 		}
 		
 		if(mouseLocked){
-			Vector2f deltaPos = Input.getMousePosition().sub(centerPos);
+			Vector2f deltaPos = Input.getMousePos().sub(centerPos);
 			
 			boolean rotX = deltaPos.getY() != 0;
 			boolean rotY = deltaPos.getX() != 0;
@@ -85,7 +85,7 @@ public class Camera {
 			}
 			
 			if(rotX || rotY){
-				Input.setMousePosition(new Vector2f(Window.getWidth()/2, Window.getHeight()/2));
+				Input.setMousePos(new Vector2f(Window.getWidth()/2, Window.getHeight()/2));
 			}
 		}
 		
