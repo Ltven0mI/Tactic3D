@@ -1,5 +1,6 @@
 package twg.tactic.base.engine.rendering;
 
+import twg.tactic.base.engine.components.BaseLight;
 import twg.tactic.base.engine.components.DirectionalLight;
 import twg.tactic.base.engine.core.Matrix4f;
 import twg.tactic.base.engine.core.Transform;
@@ -50,17 +51,17 @@ private static final ForwardDirectional instance = new ForwardDirectional();
 		setUniformf("specInt", material.getSpecularInt());
 		setUniformf("specExp", material.getSpecularExp());
 		
-		setUniform("directionalLight", getRenderingEngine().getDirectionalLight());
+		setUniformDirectionalLight("directionalLight", (DirectionalLight)getRenderingEngine().getActiveLight());
 	}
 	
-	public void setUniform(String uniformName, BaseLight baseLight) {
-		setUniform(uniformName + ".color", baseLight.getColor());
-		setUniformf(uniformName + ".intensity", baseLight.getIntensity());
+	public void setUniformBaseLight(String uniformName, BaseLight light) {
+		setUniform(uniformName + ".color", light.getColor());
+		setUniformf(uniformName + ".intensity", light.getIntensity());
 	}
 	
-	public void setUniform(String uniformName, DirectionalLight directionalLight) {
-		setUniform(uniformName + ".base", directionalLight.getBase());
-		setUniform(uniformName + ".direction", directionalLight.getDirection());
+	public void setUniformDirectionalLight(String uniformName, DirectionalLight light) {
+		setUniformBaseLight(uniformName + ".base", light);
+		setUniform(uniformName + ".direction", light.getDirection());
 	}
 	
 }

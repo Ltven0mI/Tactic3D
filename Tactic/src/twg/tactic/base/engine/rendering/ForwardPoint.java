@@ -1,5 +1,6 @@
 package twg.tactic.base.engine.rendering;
 
+import twg.tactic.base.engine.components.BaseLight;
 import twg.tactic.base.engine.components.PointLight;
 import twg.tactic.base.engine.core.Matrix4f;
 import twg.tactic.base.engine.core.Transform;
@@ -54,20 +55,20 @@ private static final ForwardPoint instance = new ForwardPoint();
 		setUniformf("specInt", material.getSpecularInt());
 		setUniformf("specExp", material.getSpecularExp());
 		
-		setUniform("pointLight", getRenderingEngine().getPointLight());
+		setUniformPointLight("pointLight", (PointLight)getRenderingEngine().getActiveLight());
 	}
 	
-	public void setUniform(String uniformName, BaseLight baseLight) {
+	public void setUniformBaseLight(String uniformName, BaseLight baseLight) {
 		setUniform(uniformName + ".color", baseLight.getColor());
 		setUniformf(uniformName + ".intensity", baseLight.getIntensity());
 	}
 	
-	public void setUniform(String uniformName, PointLight pointLight) {
-		setUniform(uniformName + ".base", pointLight.getBase());
-		setUniformf(uniformName + ".atten.constant", pointLight.getAtten().getConstant());
-		setUniformf(uniformName + ".atten.linear", pointLight.getAtten().getLinear());
-		setUniformf(uniformName + ".atten.exponent", pointLight.getAtten().getExponent());
-		setUniform(uniformName + ".position", pointLight.getPos());
+	public void setUniformPointLight(String uniformName, PointLight pointLight) {
+		setUniformBaseLight(uniformName + ".base", pointLight);
+		setUniformf(uniformName + ".atten.constant", pointLight.getConstant());
+		setUniformf(uniformName + ".atten.linear", pointLight.getLinear());
+		setUniformf(uniformName + ".atten.exponent", pointLight.getExponent());
+		setUniform(uniformName + ".position", pointLight.getTransform().getPos());
 		setUniformf(uniformName + ".range", pointLight.getRange());
 	}
 	

@@ -27,8 +27,7 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 import java.util.ArrayList;
 
-import twg.tactic.base.engine.components.DirectionalLight;
-import twg.tactic.base.engine.components.PointLight;
+import twg.tactic.base.engine.components.BaseLight;
 import twg.tactic.base.engine.core.GameObject;
 import twg.tactic.base.engine.core.Vector3f;
 
@@ -36,28 +35,20 @@ public class RenderingEngine {
 	
 	private Camera mainCamera;
 	private Vector3f ambientLight;
-	private SpotLight spotLight;
 	
 	//Permanent Structures
-	private DirectionalLight activeDirectionalLight;
-	private PointLight activePointLight;
-	
-	private ArrayList<DirectionalLight> directionalLights;
-	private ArrayList<PointLight> pointLights;
+	private ArrayList<BaseLight> lights;
+	private BaseLight activeLight;
 	
 	
 	public Camera getMainCamera() { return mainCamera; }
 	public Vector3f getAmbientLight() { return ambientLight; }
-	public DirectionalLight getDirectionalLight() { return activeDirectionalLight; }
-	public PointLight getPointLight() { return activePointLight; }
-	public SpotLight getSpotLight() { return spotLight; }
 	
 	public void setMainCamera(Camera mainCamera) { this.mainCamera = mainCamera; }
 	
 	
 	public RenderingEngine() {
-		directionalLights = new ArrayList<DirectionalLight>();
-		pointLights = new ArrayList<PointLight>();
+		lights = new ArrayList<BaseLight>();
 		
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		
@@ -73,7 +64,7 @@ public class RenderingEngine {
 		mainCamera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		
 		ambientLight = new Vector3f(0.001f, 0.001f, 0.001f);
-		spotLight = new SpotLight(new PointLight(new BaseLight(new Vector3f(1, 1, 1), 0.4f), new Attenuation(0, 0, 1), new Vector3f(14, 0.1f, 5), 100), new Vector3f(1, 0, 0), 0.7f);
+//		spotLight = new SpotLight(new PointLight(new BaseLight(new Vector3f(1, 1, 1), 0.4f), new Attenuation(0, 0, 1), new Vector3f(14, 0.1f, 5), 100), new Vector3f(1, 0, 0), 0.7f);
 		
 //		int fieldX = 5;
 //		int fieldY = 5;
@@ -95,17 +86,12 @@ public class RenderingEngine {
 	
 	public void render(GameObject object) {
 		clearScreen();
-		clearLightsList();
+		lights.clear();
+		
 		object.addToRenderingEngine(this);
 		
 		Shader forwardAmbient = ForwardAmbient.getInstance();
-		Shader forwardDirectional = ForwardDirectional.getInstance();
-		Shader forwardPointLight = ForwardPoint.getInstance();
-		Shader forwardSpot = ForwardSpot.getInstance();
 		forwardAmbient.setRenderingEngine(this);
-		forwardDirectional.setRenderingEngine(this);
-		forwardPointLight.setRenderingEngine(this);
-		forwardSpot.setRenderingEngine(this);
 		
 		object.render(forwardAmbient);
 		
@@ -114,43 +100,17 @@ public class RenderingEngine {
 		glDepthMask(false);
 		glDepthFunc(GL_EQUAL);
 		
-		for(DirectionalLight light : directionalLights){
-			activeDirectionalLight = light;
-			object.render(forwardDirectional);
+		for(BaseLight light : lights){
+			light.getShader().setRenderingEngine(this);
+			
+			activeLight = light;
+			
+			object.render(light.getShader());
 		}
-		
-		for(PointLight light : pointLights){
-			activePointLight = light;
-			object.render(forwardPointLight);
-		}
-		
-//		//object.render(forwardDirectional);
-//		
-//		DirectionalLight temp = directionalLight;
-//		directionalLight = directionalLight2;
-//		directionalLight2 = temp;
-//		
-//		//object.render(forwardDirectional);
-//		
-//		temp = directionalLight;
-//		directionalLight = directionalLight2;
-//		directionalLight2 = temp;
-//		
-//		for(int i=0; i<pointLights.length; i++){
-//			pointLight = pointLights[i];
-//			object.render(forwardPointLight);
-//		}
-//		
-//		//object.render(forwardSpot);
 		
 		glDepthFunc(GL_LESS);
 		glDepthMask(true);
 		glDisable(GL_BLEND);
-	}
-	
-	private void clearLightsList() {
-		directionalLights.clear();
-		pointLights.clear();
 	}
 	
 	private static void clearScreen() {
@@ -177,12 +137,12 @@ public class RenderingEngine {
 		return glGetString(GL_VERSION);
 	}
 	
-	public void addDirectionalLight(DirectionalLight directionalLight) {
-		directionalLights.add(directionalLight);
+	public void addLight(BaseLight light) {
+		lights.add(light);
 	}
 	
-	public void addPointLight(PointLight pointLight) {
-		pointLights.add(pointLight);
+	public BaseLight getActiveLight() {
+		return activeLight;
 	}
 	
 }

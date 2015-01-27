@@ -1,6 +1,8 @@
 package twg.tactic.base.engine.rendering;
 
+import twg.tactic.base.engine.components.BaseLight;
 import twg.tactic.base.engine.components.PointLight;
+import twg.tactic.base.engine.components.SpotLight;
 import twg.tactic.base.engine.core.Matrix4f;
 import twg.tactic.base.engine.core.Transform;
 
@@ -56,25 +58,21 @@ private static final ForwardSpot instance = new ForwardSpot();
 		setUniformf("specInt", material.getSpecularInt());
 		setUniformf("specExp", material.getSpecularExp());
 		
-		setUniform("spotLight", getRenderingEngine().getSpotLight());
+		setUniformSpotLight("spotLight", (SpotLight)getRenderingEngine().getActiveLight());
 	}
 	
-	public void setUniform(String uniformName, BaseLight baseLight) {
+	public void setUniformBaseLight(String uniformName, BaseLight baseLight) {
 		setUniform(uniformName + ".color", baseLight.getColor());
 		setUniformf(uniformName + ".intensity", baseLight.getIntensity());
 	}
 	
-	public void setUniform(String uniformName, PointLight pointLight) {
-		setUniform(uniformName + ".base", pointLight.getBase());
-		setUniformf(uniformName + ".atten.constant", pointLight.getAtten().getConstant());
-		setUniformf(uniformName + ".atten.linear", pointLight.getAtten().getLinear());
-		setUniformf(uniformName + ".atten.exponent", pointLight.getAtten().getExponent());
-		setUniform(uniformName + ".position", pointLight.getPos());
-		setUniformf(uniformName + ".range", pointLight.getRange());
-	}
-	
-	public void setUniform(String uniformName, SpotLight spotLight) {
-		setUniform(uniformName + ".pointLight", spotLight.getPointLight());
+	public void setUniformSpotLight(String uniformName, SpotLight spotLight) {
+		setUniformBaseLight(uniformName + ".pointLight.base", spotLight);
+		setUniformf(uniformName + ".pointLight.atten.constant", spotLight.getConstant());
+		setUniformf(uniformName + ".pointLight.atten.linear", spotLight.getLinear());
+		setUniformf(uniformName + ".pointLight.atten.exponent", spotLight.getExponent());
+		setUniform(uniformName + ".pointLight.position", spotLight.getTransform().getPos());
+		setUniformf(uniformName + ".pointLight.range", spotLight.getRange());
 		setUniform(uniformName + ".direction", spotLight.getDirection());
 		setUniformf(uniformName + ".cutOff", spotLight.getCutOff());
 	}
