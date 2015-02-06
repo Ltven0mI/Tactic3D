@@ -1,9 +1,7 @@
 package twg.tactic.base.engine.components;
 
 import twg.tactic.base.engine.core.Vector3f;
-import twg.tactic.base.engine.rendering.Attenuation;
 import twg.tactic.base.engine.rendering.ForwardPoint;
-import twg.tactic.base.engine.rendering.RenderingEngine;
 
 public class PointLight extends BaseLight{
 	
@@ -22,7 +20,7 @@ public class PointLight extends BaseLight{
 	public void setBase(BaseLight base) { this.base = base; }
 	public void setConstant(float constant) { this.attenuation.setX(constant); }
 	public void setLinear(float linear) { this.attenuation.setY(linear); }
-	public void setExponent(float exponent) { this.attenuation.setX(exponent); }
+	public void setExponent(float exponent) { this.attenuation.setZ(exponent); }
 	public void setRange(float range) { this.range = range; }
 	
 	public PointLight(Vector3f color, float intensity, Vector3f attenuation) {

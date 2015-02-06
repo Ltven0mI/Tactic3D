@@ -25,6 +25,7 @@ public class BaseLight extends GameComponent{
 		this.intensity = intensity;
 	}
 	
+	@Override
 	public void addToRenderingEngine(RenderingEngine renderingEngine) {
 		renderingEngine.addLight(this);
 	}

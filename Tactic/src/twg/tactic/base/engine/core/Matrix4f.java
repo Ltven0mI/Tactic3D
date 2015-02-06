@@ -65,6 +65,27 @@ public class Matrix4f {
 		return this;
 	}
 	
+	public Matrix4f initRotation(Vector3f forward, Vector3f up) {
+		Vector3f f = forward.normalized();
+		Vector3f r = up.normalized().cross(f);
+		Vector3f u = f.cross(r);
+		
+		return initRotation(f, u, r);
+	}
+	
+	public Matrix4f initRotation(Vector3f forward, Vector3f up, Vector3f right) {
+		Vector3f f = forward;
+		Vector3f r = right;
+		Vector3f u = up;
+		
+		m[0][0] = r.getX();	m[0][1] = r.getY();	m[0][2] = r.getZ();	m[0][3] = 0;
+		m[1][0] = u.getX();	m[1][1] = u.getY();	m[1][2] = u.getZ();	m[1][3] = 0;
+		m[2][0] = f.getX();	m[2][1] = f.getY();	m[2][2] = f.getZ();	m[2][3] = 0;
+		m[3][0] = 0;		m[3][1] = 0;		m[3][2] = 0;		m[3][3] = 1;
+		
+		return this;
+	}
+	
 	public Matrix4f initScale(float x, float y, float z) {
 		m[0][0] = x;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = 0;
 		m[1][0] = 0;	m[1][1] = y;	m[1][2] = 0;	m[1][3] = 0;
@@ -93,22 +114,6 @@ public class Matrix4f {
 		m[1][0] = 0;		m[1][1] = 2/height;	m[1][2] = 0;		m[1][3] = -(bottom+top)/height;
 		m[2][0] = 0;		m[2][1] = 0;		m[2][2] = -2/depth;	m[2][3] = -(zFar+zNear)/depth;
 		m[3][0] = 0;		m[3][1] = 0;		m[3][2] = 0;		m[3][3] = 1;
-		return this;
-	}
-	
-	public Matrix4f initRotation(Vector3f forward, Vector3f up) {
-		Vector3f f = forward.normalized();
-		
-		Vector3f r = up.normalized();
-		r = r.cross(f);
-		
-		Vector3f u = f.cross(r);
-		
-		m[0][0] = r.getX();	m[0][1] = r.getY();	m[0][2] = r.getZ();	m[0][3] = 0;
-		m[1][0] = u.getX();	m[1][1] = u.getY();	m[1][2] = u.getZ();	m[1][3] = 0;
-		m[2][0] = f.getX();	m[2][1] = f.getY();	m[2][2] = f.getZ();	m[2][3] = 0;
-		m[3][0] = 0;		m[3][1] = 0;		m[3][2] = 0;		m[3][3] = 1;
-		
 		return this;
 	}
 	

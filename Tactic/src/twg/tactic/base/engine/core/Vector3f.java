@@ -29,7 +29,15 @@ public class Vector3f {
 	}
 	
 	public float dot(Vector3f r) {
-		return x*r.getX()+y*r.getY()+z*r.getZ();
+		return x * r.getX() + y * r.getY() + z * r.getZ();
+	}
+	
+	public Vector3f cross(Vector3f r) {
+		float x_ = y * r.getZ() - z * r.getY();
+		float y_ = z * r.getX() - x * r.getZ();
+		float z_ = x * r.getY() - y * r.getX();
+		
+		return new Vector3f(x_, y_, z_);
 	}
 	
 	public Vector3f normalized() {
@@ -37,16 +45,11 @@ public class Vector3f {
 		return new Vector3f(x/length, y/length, z/length);
 	}
 	
-	public Vector3f rotate(float angle, Vector3f axis) {
-		float sinHalfAngle = (float)Math.sin(Math.toRadians(angle/2));
-		float cosHalfAngle = (float)Math.cos(Math.toRadians(angle/2));
-		
-		float rX = axis.getX() * sinHalfAngle;
-		float rY = axis.getY() * sinHalfAngle;
-		float rZ = axis.getZ() * sinHalfAngle;
-		float rW = cosHalfAngle;
-		
-		Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
+	public Vector3f rotate(Vector3f axis, float angle) {
+		return this.rotate(new Quaternion().initRotation(axis, angle));
+	}
+	
+	public Vector3f rotate(Quaternion rotation) {
 		Quaternion conjugate = rotation.conjugate();
 		Quaternion w = rotation.mul(this).mul(conjugate);
 		
@@ -54,18 +57,11 @@ public class Vector3f {
 		y = w.getY();
 		z = w.getZ();
 		
-		return this;
+		return new Vector3f(w.getX(), w.getY(), w.getZ());
 	}
 	
 	public Vector3f lerp(Vector3f dest, float lerpFactor) {
 		return dest.sub(this).mul(lerpFactor).add(this);
-	}
-	
-	public Vector3f cross(Vector3f r) {
-		float x_ = y * r.getZ() - z * r.getY();
-		float y_ = z * r.getX() - x * r.getZ();
-		float z_ = x * r.getY() - y * r.getX();
-		return new Vector3f(x_, y_, z_);
 	}
 	
 	public Vector3f add(Vector3f r) {
@@ -115,6 +111,12 @@ public class Vector3f {
 	public Vector2f getYX() { return new Vector2f(y, x); }
 	public Vector2f getZY() { return new Vector2f(z, y); }
 	public Vector2f getXZ() { return new Vector2f(x, z); }
+	
+	public void set(float x, float y, float z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 	
 	public boolean equels(Vector3f r) {
 		return x == r.getX() && y == r.getY() && z == r.getZ();

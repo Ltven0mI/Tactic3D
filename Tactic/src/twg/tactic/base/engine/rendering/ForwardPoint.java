@@ -50,7 +50,7 @@ private static final ForwardPoint instance = new ForwardPoint();
 		setUniform("MVP", projectedMatrix);
 		setUniform("model", worldMatrix);
 		
-		setUniform("eyePos", getRenderingEngine().getMainCamera().getPos());
+		setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getPos());
 		
 		setUniformf("specInt", material.getSpecularInt());
 		setUniformf("specExp", material.getSpecularExp());

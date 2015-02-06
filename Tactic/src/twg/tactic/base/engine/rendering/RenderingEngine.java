@@ -28,6 +28,7 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 import java.util.ArrayList;
 
 import twg.tactic.base.engine.components.BaseLight;
+import twg.tactic.base.engine.components.Camera;
 import twg.tactic.base.engine.core.GameObject;
 import twg.tactic.base.engine.core.Vector3f;
 
@@ -61,7 +62,7 @@ public class RenderingEngine {
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		mainCamera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
+//		mainCamera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		
 		ambientLight = new Vector3f(0.001f, 0.001f, 0.001f);
 //		spotLight = new SpotLight(new PointLight(new BaseLight(new Vector3f(1, 1, 1), 0.4f), new Attenuation(0, 0, 1), new Vector3f(14, 0.1f, 5), 100), new Vector3f(1, 0, 0), 0.7f);
@@ -78,10 +79,6 @@ public class RenderingEngine {
 //				pointLights[x+y*fieldX] = new PointLight(new BaseLight(new Vector3f(0, 1, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(x*spaceX, 0, y*spaceY), 50);
 //			}
 //		}
-	}
-	
-	public void input(float delta) {
-		mainCamera.input(delta);
 	}
 	
 	public void render(GameObject object) {
@@ -139,6 +136,10 @@ public class RenderingEngine {
 	
 	public void addLight(BaseLight light) {
 		lights.add(light);
+	}
+	
+	public void addCamera(Camera camera) {
+		mainCamera = camera;
 	}
 	
 	public BaseLight getActiveLight() {

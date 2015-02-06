@@ -1,6 +1,5 @@
 package twg.tactic.base.engine.components;
 
-import twg.tactic.base.engine.core.Transform;
 import twg.tactic.base.engine.rendering.Material;
 import twg.tactic.base.engine.rendering.Mesh;
 import twg.tactic.base.engine.rendering.Shader;

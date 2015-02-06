@@ -1,11 +1,13 @@
 package twg.tactic.base.engine.game;
 
+import twg.tactic.base.engine.components.Camera;
 import twg.tactic.base.engine.components.DirectionalLight;
 import twg.tactic.base.engine.components.MeshRenderer;
 import twg.tactic.base.engine.components.PointLight;
 import twg.tactic.base.engine.components.SpotLight;
 import twg.tactic.base.engine.core.Game;
 import twg.tactic.base.engine.core.GameObject;
+import twg.tactic.base.engine.core.Quaternion;
 import twg.tactic.base.engine.core.Vector2f;
 import twg.tactic.base.engine.core.Vector3f;
 import twg.tactic.base.engine.rendering.Attenuation;
@@ -13,6 +15,7 @@ import twg.tactic.base.engine.rendering.Material;
 import twg.tactic.base.engine.rendering.Mesh;
 import twg.tactic.base.engine.rendering.Texture;
 import twg.tactic.base.engine.rendering.Vertex;
+import twg.tactic.base.engine.rendering.Window;
 
 public class TestGame extends Game{
 	
@@ -54,14 +57,16 @@ public class TestGame extends Game{
 		for(int y=0; y<fieldY; y++){
 			for(int x=0; x<fieldX; x++){
 				gameObjects[x+y*fieldX] = new GameObject();
-				gameObjects[x+y*fieldX].getTransform().setPos(new Vector3f(x*spaceX, 0, y*spaceY));
-				gameObjects[x+y*fieldX].addComponent(new PointLight(new Vector3f((float)(Math.random()*0.1f+0.9f), (float)(Math.random()*0.1f+0.7f), 0), 0.8f, new Vector3f(0, 0, 1)/*, new Vector3f(x*spaceX, 0, y*spaceY)*/));
+				gameObjects[x+y*fieldX].getTransform().getPos().set(x*spaceX, 0, y*spaceY);
+				gameObjects[x+y*fieldX].getTransform().setRot(new Quaternion().initRotation(new Vector3f(0, 1, 0), (float)Math.toRadians(-90.0f)));
+				gameObjects[x+y*fieldX].addComponent(new SpotLight(new Vector3f((float)(Math.random()*0.1f+0.9f), (float)(Math.random()*0.1f+0.7f), 0), 0.8f, new Vector3f(0, 0, 0.8f), 0.7f/*, new Vector3f(x*spaceX, 0, y*spaceY)*/));
 //				gameObjects[x+y*fieldX].addComponent(new SpotLight(new Vector3f((float)(Math.random()*0.1f+0.9f), (float)(Math.random()*0.1f+0.7f), 0), 0.8f, new Vector3f(0, 0, 1), new Vector3f(x*spaceX, 0, y*spaceY), 100, new Vector3f(1, 0, 1), 0.3f));
 			}
 		}
 		
 		getRootObject().addChild(planeObject);
 		getRootObject().addChild(directionalLightObject);
+		getRootObject().addChild(new GameObject().addComponent(new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f)));
 		//getRootObject().addChild(pointLightObject);
 		
 		for(int y=0; y<fieldY; y++){
