@@ -53,7 +53,7 @@ private static final ForwardSpot instance = new ForwardSpot();
 		setUniform("MVP", projectedMatrix);
 		setUniform("model", worldMatrix);
 		
-		setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getPos());
+		setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getTransformedPos());
 		
 		setUniformf("specInt", material.getSpecularInt());
 		setUniformf("specExp", material.getSpecularExp());
@@ -71,7 +71,7 @@ private static final ForwardSpot instance = new ForwardSpot();
 		setUniformf(uniformName + ".pointLight.atten.constant", spotLight.getConstant());
 		setUniformf(uniformName + ".pointLight.atten.linear", spotLight.getLinear());
 		setUniformf(uniformName + ".pointLight.atten.exponent", spotLight.getExponent());
-		setUniform(uniformName + ".pointLight.position", spotLight.getTransform().getPos());
+		setUniform(uniformName + ".pointLight.position", spotLight.getTransform().getTransformedPos());
 		setUniformf(uniformName + ".pointLight.range", spotLight.getRange());
 		setUniform(uniformName + ".direction", spotLight.getDirection());
 		setUniformf(uniformName + ".cutOff", spotLight.getCutOff());

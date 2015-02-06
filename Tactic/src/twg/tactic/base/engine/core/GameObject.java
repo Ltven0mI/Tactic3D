@@ -23,6 +23,7 @@ public class GameObject {
 	
 	public void addChild(GameObject child) {
 		children.add(child);
+		child.getTransform().setParent(transform);
 	}
 	
 	public GameObject addComponent(GameComponent component) {
@@ -42,6 +43,8 @@ public class GameObject {
 	}
 	
 	public void update(float delta) {
+		transform.update();
+		
 		for(GameComponent component : components){
 			component.update(delta);
 		}

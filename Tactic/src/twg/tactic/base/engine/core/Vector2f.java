@@ -81,6 +81,16 @@ public class Vector2f {
 		return "("+x+", "+y+")";
 	}
 	
+	public Vector2f set(float x, float y) {
+		this.x = x; this.y = y;
+		return this;
+	}
+	
+	public Vector2f set(Vector2f r) {
+		this.x = r.getX(); this.y = r.getY();
+		return this;
+	}
+	
 	public boolean equels(Vector2f r) {
 		return x == r.getX() && y == r.getY();
 	}

@@ -46,7 +46,7 @@ private static final ForwardDirectional instance = new ForwardDirectional();
 		setUniform("MVP", projectedMatrix);
 		setUniform("model", worldMatrix);
 		
-		setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getPos());
+		setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getTransformedPos());
 		
 		setUniformf("specInt", material.getSpecularInt());
 		setUniformf("specExp", material.getSpecularExp());

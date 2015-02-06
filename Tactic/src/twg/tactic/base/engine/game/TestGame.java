@@ -29,8 +29,19 @@ public class TestGame extends Game{
 											new Vertex( new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f(1.0f, 1.0f))};
 		
 		int indices[] = { 0, 1, 2, 2, 1, 3};
+		
+		fieldDepth = 1.0f;
+		fieldWidth = 1.0f;
+		
+		Vertex[] vertices2 = new Vertex[] { 	new Vertex( new Vector3f(-fieldWidth, 0.0f, -fieldDepth), new Vector2f(0.0f, 0.0f)),
+											new Vertex( new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f(0.0f, 1.0f)),
+											new Vertex( new Vector3f(fieldWidth * 3, 0.0f, -fieldDepth), new Vector2f(1.0f, 0.0f)),
+											new Vertex( new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f(1.0f, 1.0f))};
+		
+		int indices2[] = { 0, 1, 2, 2, 1, 3};
 
 		Mesh mesh = new Mesh(vertices, indices, true);
+		Mesh mesh2 = new Mesh(vertices2, indices2, true);
 		Material material = new Material(new Texture("tiles.png"), new Vector3f(1, 1, 1), 1, 8);
 		MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
 		
@@ -39,9 +50,9 @@ public class TestGame extends Game{
 		planeObject.getTransform().setPos(0, -1, 5);
 		
 		GameObject directionalLightObject = new GameObject();
-		directionalLightObject.addComponent(new DirectionalLight(new Vector3f(0, 0, 1), 0.4f, new Vector3f(1, 1, 1)));
-		directionalLightObject.addComponent(new DirectionalLight(new Vector3f(1, 1, 0), 0.4f, new Vector3f(-1, 1, -1)));
+		directionalLightObject.addComponent(new DirectionalLight(new Vector3f(0, 0, 1), 0.4f));
 		directionalLightObject.getTransform().setPos(10, 1, 10);
+		directionalLightObject.getTransform().setRot(new Quaternion(new Vector3f(1, 0, 0), (float)Math.toRadians(-45)));
 		
 		GameObject pointLightObject = new GameObject();
 		pointLightObject.addComponent(new PointLight(new Vector3f(0, 1, 0), 0.8f,  new Vector3f(0, 0, 1)));
@@ -57,22 +68,37 @@ public class TestGame extends Game{
 		for(int y=0; y<fieldY; y++){
 			for(int x=0; x<fieldX; x++){
 				gameObjects[x+y*fieldX] = new GameObject();
-				gameObjects[x+y*fieldX].getTransform().getPos().set(x*spaceX, 0, y*spaceY);
-				gameObjects[x+y*fieldX].getTransform().setRot(new Quaternion().initRotation(new Vector3f(0, 1, 0), (float)Math.toRadians(-90.0f)));
+				gameObjects[x+y*fieldX].getTransform().getPos().set(x*spaceX, -0.5f, y*spaceY);
+				gameObjects[x+y*fieldX].getTransform().setRot(new Quaternion(new Vector3f(0, 1, 0), (float)Math.toRadians(90.0f)));
 				gameObjects[x+y*fieldX].addComponent(new SpotLight(new Vector3f((float)(Math.random()*0.1f+0.9f), (float)(Math.random()*0.1f+0.7f), 0), 0.8f, new Vector3f(0, 0, 0.8f), 0.7f/*, new Vector3f(x*spaceX, 0, y*spaceY)*/));
 //				gameObjects[x+y*fieldX].addComponent(new SpotLight(new Vector3f((float)(Math.random()*0.1f+0.9f), (float)(Math.random()*0.1f+0.7f), 0), 0.8f, new Vector3f(0, 0, 1), new Vector3f(x*spaceX, 0, y*spaceY), 100, new Vector3f(1, 0, 1), 0.3f));
 			}
 		}
 		
+		GameObject camera = new GameObject().addComponent(new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f));
+		
 		getRootObject().addChild(planeObject);
 		getRootObject().addChild(directionalLightObject);
-		getRootObject().addChild(new GameObject().addComponent(new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f)));
 		//getRootObject().addChild(pointLightObject);
 		
-		for(int y=0; y<fieldY; y++){
-			for(int x=0; x<fieldX; x++){
-				getRootObject().addChild(gameObjects[x+y*fieldX]);
-			}
-		}
+		GameObject testMesh1 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
+		GameObject testMesh2 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
+
+		testMesh1.getTransform().getPos().set(0, 2, 0);
+		testMesh1.getTransform().setRot(new Quaternion(new Vector3f(0,1,0), 0.4f));
+
+		testMesh2.getTransform().getPos().set(0, 0, 5);
+
+		testMesh1.addChild(testMesh2);
+		getRootObject().addChild(testMesh1);
+		testMesh2.addChild(camera);
+		
+//		for(int y=0; y<fieldY; y++){
+//			for(int x=0; x<fieldX; x++){
+//				getRootObject().addChild(gameObjects[x+y*fieldX]);
+//			}
+//		}
+		
+//		getRootObject().addChild(camera);
 	}
 }

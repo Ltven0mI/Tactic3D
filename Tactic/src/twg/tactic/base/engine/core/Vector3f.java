@@ -46,7 +46,7 @@ public class Vector3f {
 	}
 	
 	public Vector3f rotate(Vector3f axis, float angle) {
-		return this.rotate(new Quaternion().initRotation(axis, angle));
+		return this.rotate(new Quaternion(axis, angle));
 	}
 	
 	public Vector3f rotate(Quaternion rotation) {
@@ -112,10 +112,14 @@ public class Vector3f {
 	public Vector2f getZY() { return new Vector2f(z, y); }
 	public Vector2f getXZ() { return new Vector2f(x, z); }
 	
-	public void set(float x, float y, float z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public Vector3f set(float x, float y, float z) {
+		this.x = x; this.y = y; this.z = z;
+		return this;
+	}
+	
+	public Vector3f set(Vector3f r) {
+		this.x = r.getX(); this.y = r.getY(); this.z = r.getZ();
+		return this;
 	}
 	
 	public boolean equels(Vector3f r) {

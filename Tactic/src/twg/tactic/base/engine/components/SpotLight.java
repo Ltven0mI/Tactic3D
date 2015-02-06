@@ -7,7 +7,7 @@ public class SpotLight extends PointLight{
 	
 	private float cutOff;
 	
-	public Vector3f getDirection() { return getTransform().getRot().getForward(); }
+	public Vector3f getDirection() { return getTransform().getTransformedRot().getForward(); }
 	public float getCutOff() { return cutOff; }
 	
 	public void setCutOff(float cutOff) { this.cutOff = cutOff; }
