@@ -42,20 +42,20 @@ private static final ForwardPoint instance = new ForwardPoint();
 		addUniform("pointLight.range");
 	}
 	
-	public void updateUniforms(Transform transform, Material material) {
+	public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
 		Matrix4f worldMatrix = transform.getTransformation();
-		Matrix4f projectedMatrix = getRenderingEngine().getMainCamera().getViewProjection().mul(worldMatrix);
-		material.getTexture().bind();
+		Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
+		material.getTexture("diffuse").bind();
 		
 		setUniform("MVP", projectedMatrix);
 		setUniform("model", worldMatrix);
 		
-		setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getTransformedPos());
+		setUniform("eyePos", renderingEngine.getMainCamera().getTransform().getTransformedPos());
 		
-		setUniformf("specInt", material.getSpecularInt());
-		setUniformf("specExp", material.getSpecularExp());
+		setUniformf("specInt", material.getFloat("specularIntensity"));
+		setUniformf("specExp", material.getFloat("specularPower"));
 		
-		setUniformPointLight("pointLight", (PointLight)getRenderingEngine().getActiveLight());
+		setUniformPointLight("pointLight", (PointLight)renderingEngine.getActiveLight());
 	}
 	
 	public void setUniformBaseLight(String uniformName, BaseLight baseLight) {

@@ -15,16 +15,8 @@ import twg.tactic.base.engine.core.Vector3f;
 
 public class Shader {
 	
-	private RenderingEngine renderingEngine;
-	
 	private int program;
 	private HashMap<String, Integer> uniforms;
-	
-	
-	public RenderingEngine getRenderingEngine() { return renderingEngine; }
-	
-	public void setRenderingEngine(RenderingEngine renderingEngine) { this.renderingEngine = renderingEngine; }
-	
 	
 	public Shader() {
 		program = glCreateProgram();
@@ -51,7 +43,7 @@ public class Shader {
 		uniforms.put(uniform, uniformLocation);
 	}
 	
-	public void updateUniforms(Transform transform, Material material) {
+	public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
 		
 	}
 	

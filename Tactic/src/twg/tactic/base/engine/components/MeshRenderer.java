@@ -2,6 +2,7 @@ package twg.tactic.base.engine.components;
 
 import twg.tactic.base.engine.rendering.Material;
 import twg.tactic.base.engine.rendering.Mesh;
+import twg.tactic.base.engine.rendering.RenderingEngine;
 import twg.tactic.base.engine.rendering.Shader;
 
 public class MeshRenderer extends GameComponent{
@@ -15,9 +16,9 @@ public class MeshRenderer extends GameComponent{
 	}
 	
 	@Override
-	public void render(Shader shader) {
+	public void render(Shader shader, RenderingEngine renderingEngine) {
 		shader.bind();
-		shader.updateUniforms(getTransform(), material);
+		shader.updateUniforms(getTransform(), material, renderingEngine);
 		mesh.draw();
 	}
 	
