@@ -10,7 +10,6 @@ import twg.tactic.base.engine.core.GameObject;
 import twg.tactic.base.engine.core.Quaternion;
 import twg.tactic.base.engine.core.Vector2f;
 import twg.tactic.base.engine.core.Vector3f;
-import twg.tactic.base.engine.rendering.Attenuation;
 import twg.tactic.base.engine.rendering.Material;
 import twg.tactic.base.engine.rendering.Mesh;
 import twg.tactic.base.engine.rendering.Texture;
@@ -43,9 +42,16 @@ public class TestGame extends Game{
 		Mesh mesh = new Mesh(vertices, indices, true);
 		Mesh mesh2 = new Mesh(vertices2, indices2, true);
 		Material material = new Material();//(new Texture("tiles.png"), new Vector3f(1, 1, 1), 1, 8);
-		//material.addTexture("diffuse", new Texture("tiles.png"));
+		material.addTexture("diffuse", new Texture("tiles.png"));
 		material.addFloat("specularIntensity", 1.0f);
 		material.addFloat("specularPower", 8.0f);
+		
+		Material material2 = new Material();//(new Texture("tiles.png"), new Vector3f(1, 1, 1), 1, 8);
+		material2.addTexture("diffuse", new Texture("test.png"));
+		material2.addFloat("specularIntensity", 1.0f);
+		material2.addFloat("specularPower", 8.0f);
+		
+		Mesh tempMesh = new Mesh("monkeyNew.obj");
 		
 		MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
 		
@@ -87,6 +93,7 @@ public class TestGame extends Game{
 		
 		GameObject testMesh1 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
 		GameObject testMesh2 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
+		GameObject testMesh3 = new GameObject().addComponent(new MeshRenderer(tempMesh, material));
 
 		testMesh1.getTransform().getPos().set(0, 2, 0);
 		testMesh1.getTransform().setRot(new Quaternion(new Vector3f(0,1,0), 0.4f));
@@ -96,6 +103,11 @@ public class TestGame extends Game{
 		testMesh1.addChild(testMesh2);
 		addObject(testMesh1);
 		testMesh2.addChild(camera);
+		addObject(testMesh3);
+		
+		GameObject testMonkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkeyNew.obj"), material2));
+		testMonkey.getTransform().setPos(0, 1, 3);
+		addObject(testMonkey);
 		
 //		for(int y=0; y<fieldY; y++){
 //			for(int x=0; x<fieldX; x++){

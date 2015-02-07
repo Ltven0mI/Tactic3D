@@ -64,7 +64,7 @@ public class RenderingEngine {
 		
 //		mainCamera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		
-		ambientLight = new Vector3f(0.001f, 0.001f, 0.001f);
+		ambientLight = new Vector3f(0.1f, 0.1f, 0.1f);
 //		spotLight = new SpotLight(new PointLight(new BaseLight(new Vector3f(1, 1, 1), 0.4f), new Attenuation(0, 0, 1), new Vector3f(14, 0.1f, 5), 100), new Vector3f(1, 0, 0), 0.7f);
 		
 //		int fieldX = 5;
