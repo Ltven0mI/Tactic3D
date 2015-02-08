@@ -43,13 +43,13 @@ public class TestGame extends Game{
 		Mesh mesh2 = new Mesh(vertices2, indices2, true);
 		Material material = new Material();//(new Texture("tiles.png"), new Vector3f(1, 1, 1), 1, 8);
 		material.addTexture("diffuse", new Texture("tiles.png"));
-		material.addFloat("specularIntensity", 1.0f);
-		material.addFloat("specularPower", 8.0f);
+		material.addFloat("specInt", 1.0f);
+		material.addFloat("specExp", 8.0f);
 		
 		Material material2 = new Material();//(new Texture("tiles.png"), new Vector3f(1, 1, 1), 1, 8);
 		material2.addTexture("diffuse", new Texture("test.png"));
-		material2.addFloat("specularIntensity", 1.0f);
-		material2.addFloat("specularPower", 8.0f);
+		material2.addFloat("specInt", 1.0f);
+		material2.addFloat("specExp", 8.0f);
 		
 		Mesh tempMesh = new Mesh("monkeyNew.obj");
 		
@@ -60,12 +60,12 @@ public class TestGame extends Game{
 		planeObject.getTransform().setPos(0, -1, 5);
 		
 		GameObject directionalLightObject = new GameObject();
-		directionalLightObject.addComponent(new DirectionalLight(new Vector3f(1, 1, 1), 0.4f));
+		directionalLightObject.addComponent(new DirectionalLight(new Vector3f(1, 1, 1), 0.1f));
 		directionalLightObject.getTransform().setPos(10, 1, 10);
 		directionalLightObject.getTransform().setRot(new Quaternion(new Vector3f(1, 0, 0), (float)Math.toRadians(-45)));
 		
 		GameObject pointLightObject = new GameObject();
-		pointLightObject.addComponent(new PointLight(new Vector3f(0, 1, 0), 0.8f,  new Vector3f(0, 0, 1)));
+		pointLightObject.addComponent(new PointLight(new Vector3f(0, 1, 0), 0.8f,  new Vector3f(0, 0, 0.5f)));
 		pointLightObject.getTransform().setPos(10, 1, 10);
 		
 		int fieldX = 5;
@@ -89,7 +89,7 @@ public class TestGame extends Game{
 		
 		addObject(planeObject);
 		addObject(directionalLightObject);
-		//getRootObject().addChild(pointLightObject);
+		addObject(pointLightObject);
 		
 		GameObject testMesh1 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
 		GameObject testMesh2 = new GameObject().addComponent(new MeshRenderer(mesh2, material));

@@ -1,7 +1,7 @@
 package twg.tactic.base.engine.components;
 
 import twg.tactic.base.engine.core.Vector3f;
-import twg.tactic.base.engine.rendering.ForwardSpot;
+import twg.tactic.base.engine.rendering.Shader;
 
 public class SpotLight extends PointLight{
 	
@@ -16,7 +16,7 @@ public class SpotLight extends PointLight{
 		super(color, intensity, attenuation);
 		this.cutOff = cutOff;
 		
-		setShader(ForwardSpot.getInstance());
+		setShader(new Shader("forward-spot"));
 	}
 	
 }

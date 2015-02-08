@@ -1,7 +1,7 @@
 package twg.tactic.base.engine.components;
 
 import twg.tactic.base.engine.core.Vector3f;
-import twg.tactic.base.engine.rendering.ForwardPoint;
+import twg.tactic.base.engine.rendering.Shader;
 
 public class PointLight extends BaseLight{
 	
@@ -33,7 +33,7 @@ public class PointLight extends BaseLight{
 		
 		this.range = (float)((-b + Math.sqrt(b*b - 4 * a * c))/(2*a));
 		
-		setShader(ForwardPoint.getInstance());
+		setShader(new Shader("forward-point"));
 	}
 	
 }

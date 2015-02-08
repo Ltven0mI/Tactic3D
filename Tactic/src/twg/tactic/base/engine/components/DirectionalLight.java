@@ -1,8 +1,7 @@
 package twg.tactic.base.engine.components;
 
 import twg.tactic.base.engine.core.Vector3f;
-import twg.tactic.base.engine.rendering.ForwardDirectional;
-import twg.tactic.base.engine.rendering.RenderingEngine;
+import twg.tactic.base.engine.rendering.Shader;
 
 public class DirectionalLight extends BaseLight{
 
@@ -12,7 +11,7 @@ public class DirectionalLight extends BaseLight{
 	public DirectionalLight(Vector3f color, float intensity) {
 		super(color, intensity);
 		
-		setShader(ForwardDirectional.getInstance());
+		setShader(new Shader("forward-directional"));
 	}
 
 }
